@@ -1,0 +1,1130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Arya's Exam Prep System — T.Y. B.Tech Electrical Sem I</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #f0f2f5;
+  --panel: #ffffff;
+  --ink: #141c26;
+  --muted: #52637a;
+  --line: #d4dbe5;
+  --accent: #1c4ed8;
+  --accent-soft: #eff4ff;
+  --accent2: #0e7490;
+
+  --must: #15803d; --must-bg: #dcfce7; --must-border: #86efac;
+  --high: #b45309; --high-bg: #fef3c7; --high-border: #fcd34d;
+  --med: #6d28d9; --med-bg: #f5f3ff; --med-border: #c4b5fd;
+  --low: #9ca3af; --low-bg: #f3f4f6; --low-border: #d1d5db;
+
+  --subj1: #1c4ed8; --subj1-bg: #eff4ff;
+  --subj2: #0e7490; --subj2-bg: #ecfeff;
+  --subj3: #7c3aed; --subj3-bg: #f5f3ff;
+  --subj4: #b45309; --subj4-bg: #fef3c7;
+
+  box-sizing: border-box;
+  padding-top: env(safe-area-inset-top, 0px);
+  padding-bottom: env(safe-area-inset-bottom, 0px);
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #0d1117; --panel: #161b22; --ink: #e6edf3; --muted: #8b949e; --line: #30363d;
+    --accent: #79b8ff; --accent-soft: #1c2841; --accent2: #56d6ef;
+    --must: #4ade80; --must-bg: #0a2f1b; --must-border: #166534;
+    --high: #fbbf24; --high-bg: #1c1200; --high-border: #92400e;
+    --med: #c4b5fd; --med-bg: #1e0d3a; --med-border: #5b21b6;
+    --low: #6b7280; --low-bg: #1a1c20; --low-border: #374151;
+    --subj1: #79b8ff; --subj1-bg: #112240;
+    --subj2: #56d6ef; --subj2-bg: #0c2b33;
+    --subj3: #c4b5fd; --subj3-bg: #1e0d3a;
+    --subj4: #fbbf24; --subj4-bg: #1c1200;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #0d1117; --panel: #161b22; --ink: #e6edf3; --muted: #8b949e; --line: #30363d;
+  --accent: #79b8ff; --accent-soft: #1c2841; --accent2: #56d6ef;
+  --must: #4ade80; --must-bg: #0a2f1b; --must-border: #166534;
+  --high: #fbbf24; --high-bg: #1c1200; --high-border: #92400e;
+  --med: #c4b5fd; --med-bg: #1e0d3a; --med-border: #5b21b6;
+  --low: #6b7280; --low-bg: #1a1c20; --low-border: #374151;
+  --subj1: #79b8ff; --subj1-bg: #112240;
+  --subj2: #56d6ef; --subj2-bg: #0c2b33;
+  --subj3: #c4b5fd; --subj3-bg: #1e0d3a;
+  --subj4: #fbbf24; --subj4-bg: #1c1200;
+}
+html { scroll-padding-top: 72px; }
+*, *::before, *::after { box-sizing: inherit; }
+body { margin: 0; background: var(--bg); color: var(--ink);
+  font-family: "IBM Plex Sans", system-ui, sans-serif; font-size: 15px; line-height: 1.6; }
+
+/* ── NAV ── */
+nav.top {
+  position: sticky; top: 0; z-index: 100;
+  background: var(--panel); border-bottom: 1px solid var(--line);
+  padding: env(safe-area-inset-top,0) 0 0;
+}
+.nav-inner {
+  max-width: 1100px; margin: 0 auto;
+  display: flex; align-items: center; gap: 0;
+  padding: 0 16px; height: 52px;
+  overflow-x: auto; scrollbar-width: none;
+}
+.nav-inner::-webkit-scrollbar { display: none; }
+.nav-title {
+  font-size: .82rem; font-weight: 600; color: var(--muted);
+  white-space: nowrap; padding-right: 16px; border-right: 1px solid var(--line);
+  margin-right: 4px; flex-shrink: 0;
+}
+.nav-btn {
+  padding: 6px 12px; border-radius: 6px; border: none;
+  background: none; cursor: pointer; white-space: nowrap;
+  font: 500 .85rem/1 "IBM Plex Sans", sans-serif;
+  color: var(--muted); transition: background .15s, color .15s; flex-shrink: 0;
+}
+.nav-btn:hover { background: var(--accent-soft); color: var(--ink); }
+.nav-btn.active { background: var(--accent-soft); color: var(--accent); }
+.dark-toggle {
+  margin-left: auto; padding: 5px 10px; border-radius: 6px;
+  border: 1px solid var(--line); background: var(--panel);
+  cursor: pointer; font-size: .8rem; color: var(--muted); flex-shrink: 0;
+}
+
+/* ── LAYOUT ── */
+.page { display: none; }
+.page.active { display: block; }
+main { max-width: 1100px; margin: 0 auto; padding: 28px 16px 80px; }
+
+/* ── HERO ── */
+.hero { margin-bottom: 32px; }
+.hero h1 { font-size: clamp(1.5rem, 4vw, 2.2rem); font-weight: 600;
+  letter-spacing: -.02em; margin: 0 0 6px; line-height: 1.2; }
+.hero p { color: var(--muted); margin: 0 0 20px; max-width: 64ch; }
+.hero-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 12px; }
+.hero-card {
+  background: var(--panel); border: 1px solid var(--line); border-radius: 8px;
+  padding: 14px 16px; cursor: pointer; transition: border-color .15s, box-shadow .15s;
+}
+.hero-card:hover { border-color: var(--accent); box-shadow: 0 2px 12px rgba(0,0,0,.08); }
+.hero-card .code { font-size: .75rem; font-family: "IBM Plex Mono", monospace;
+  color: var(--muted); margin-bottom: 4px; }
+.hero-card .subj { font-weight: 600; font-size: .97rem; margin-bottom: 6px; }
+.hero-card .pills { display: flex; gap: 6px; flex-wrap: wrap; }
+.hero-card .pill-sm { font-size: .72rem; padding: 2px 7px; border-radius: 99px; font-weight: 500; }
+
+/* ── SUBJECT PAGE ── */
+.subj-header { margin-bottom: 28px; }
+.subj-code { font-family: "IBM Plex Mono", monospace; font-size: .8rem; color: var(--muted); }
+.subj-title { font-size: clamp(1.3rem, 3.5vw, 1.9rem); font-weight: 600;
+  letter-spacing: -.015em; margin: 4px 0 8px; }
+.subj-meta { display: flex; gap: 16px; flex-wrap: wrap; color: var(--muted); font-size: .85rem; }
+.subj-meta span { display: flex; align-items: center; gap: 5px; }
+
+/* ── SECTION BLOCKS ── */
+.section { margin-bottom: 40px; }
+.section-title { font-size: 1.05rem; font-weight: 600; margin: 0 0 14px;
+  padding-bottom: 8px; border-bottom: 2px solid var(--line); }
+
+/* ── TABS within subject ── */
+.tab-row { display: flex; gap: 4px; flex-wrap: wrap; margin-bottom: 20px; }
+.tab-btn { padding: 6px 14px; border-radius: 6px; border: 1px solid var(--line);
+  background: var(--panel); cursor: pointer; font: 500 .83rem "IBM Plex Sans", sans-serif;
+  color: var(--muted); transition: .15s; }
+.tab-btn.active { background: var(--accent); border-color: var(--accent); color: #fff; }
+.tab-pane { display: none; }
+.tab-pane.active { display: block; }
+
+/* ── PRIORITY PILLS ── */
+.must { background: var(--must-bg); color: var(--must); border: 1px solid var(--must-border); }
+.high { background: var(--high-bg); color: var(--high); border: 1px solid var(--high-border); }
+.med  { background: var(--med-bg);  color: var(--med);  border: 1px solid var(--med-border);  }
+.low  { background: var(--low-bg);  color: var(--low);  border: 1px solid var(--low-border);  }
+.pill { display: inline-block; padding: 2px 9px; border-radius: 99px;
+  font-size: .74rem; font-weight: 600; white-space: nowrap; }
+
+/* ── TABLE ── */
+.tbl-wrap { overflow-x: auto; border: 1px solid var(--line); border-radius: 8px;
+  background: var(--panel); margin-bottom: 16px; }
+table { border-collapse: collapse; width: 100%; min-width: 560px; font-size: .88rem; }
+th { background: var(--accent-soft); font-weight: 600; padding: 9px 12px;
+  text-align: left; border-bottom: 1px solid var(--line); white-space: nowrap; }
+td { padding: 8px 12px; border-bottom: 1px solid var(--line); vertical-align: top; }
+tr:last-child td { border-bottom: 0; }
+
+/* ── INFO CARDS ── */
+.cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 12px; margin-bottom: 16px; }
+.card { background: var(--panel); border: 1px solid var(--line); border-radius: 8px; padding: 14px 16px; }
+.card h4 { margin: 0 0 8px; font-size: .9rem; font-weight: 600; }
+.card p, .card li { font-size: .87rem; color: var(--muted); margin: 3px 0; }
+.card ul { padding-left: 16px; margin: 4px 0; }
+
+/* ── STEP FLOW ── */
+.steps { display: flex; flex-direction: column; gap: 12px; }
+.step-item { background: var(--panel); border: 1px solid var(--line);
+  border-left: 4px solid var(--accent); border-radius: 0 8px 8px 0; padding: 12px 16px; }
+.step-num { font-family: "IBM Plex Mono", monospace; font-size: .78rem;
+  color: var(--muted); margin-bottom: 3px; }
+.step-label { font-weight: 600; font-size: .93rem; margin-bottom: 4px; }
+.step-body { font-size: .86rem; color: var(--muted); }
+.step-marks { font-family: "IBM Plex Mono", monospace; font-size: .78rem;
+  color: var(--accent); margin-top: 4px; }
+
+/* ── MCQ LIST ── */
+.mcq-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 8px; }
+.mcq-item { background: var(--panel); border: 1px solid var(--line); border-radius: 6px;
+  padding: 10px 13px; font-size: .86rem; }
+.mcq-item strong { display: block; color: var(--ink); margin-bottom: 2px; font-size: .82rem; }
+.mcq-item span { color: var(--muted); }
+
+/* ── TOP-20 LIST ── */
+.top20 { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 8px; }
+.top20-item { background: var(--panel); border: 1px solid var(--line); border-radius: 6px;
+  padding: 8px 12px; font-size: .86rem; display: flex; gap: 8px; align-items: flex-start; }
+.top20-num { font-family: "IBM Plex Mono", monospace; font-size: .8rem;
+  color: var(--muted); min-width: 22px; }
+
+/* ── CALLOUT ── */
+.callout { background: var(--accent-soft); border-left: 4px solid var(--accent);
+  border-radius: 0 8px 8px 0; padding: 12px 16px; margin-bottom: 16px; font-size: .88rem; }
+.callout b { color: var(--accent); }
+
+/* ── PREDICTION TABLE colour ── */
+.conf-h { color: var(--must); font-weight: 600; }
+.conf-m { color: var(--high); font-weight: 600; }
+.conf-l { color: var(--low); font-weight: 600; }
+
+/* ── BACK LINK ── */
+.back-btn { display: inline-flex; align-items: center; gap: 6px; margin-bottom: 24px;
+  padding: 6px 12px; border-radius: 6px; border: 1px solid var(--line);
+  background: var(--panel); cursor: pointer; font-size: .85rem; color: var(--muted);
+  transition: .15s; }
+.back-btn:hover { border-color: var(--accent); color: var(--accent); }
+
+@media (max-width: 600px) { main { padding: 18px 12px 60px; } }
+@media print { nav.top { display: none; } .page { display: block !important; } }
+</style>
+</head>
+<body>
+
+<nav class="top">
+  <div class="nav-inner">
+    <div class="nav-title">Arya · Sem I 2026</div>
+    <button class="nav-btn active" onclick="showPage('home')">Home</button>
+    <button class="nav-btn" onclick="showPage('lcs')">LCS</button>
+    <button class="nav-btn" onclick="showPage('em')">EM Engg</button>
+    <button class="nav-btn" onclick="showPage('psa')">Power Systems</button>
+    <button class="nav-btn" onclick="showPage('hev')">HEV Design</button>
+    <button class="dark-toggle" onclick="toggleDark()">☾ Dark</button>
+  </div>
+</nav>
+
+<!-- ═══════════════════════════════════════════════════════ HOME ═══ -->
+<div id="home" class="page active">
+<main>
+  <div class="hero">
+    <h1>Your Exam Prep System</h1>
+    <p>Four subjects. One consistent system. Click a subject to open its full guide — priority analysis, repeated questions, MCQ checklist, study order, and exam-day prediction.</p>
+    <div class="hero-grid">
+
+      <div class="hero-card" onclick="showPage('lcs')">
+        <div class="code">EEPCC-09</div>
+        <div class="subj">Linear Control System</div>
+        <div class="pills">
+          <span class="pill must">70 marks</span>
+          <span class="pill high">6 papers analysed</span>
+        </div>
+      </div>
+
+      <div class="hero-card" onclick="showPage('em')">
+        <div class="code">EEPCC-07</div>
+        <div class="subj">Electromagnetic Engineering</div>
+        <div class="pills">
+          <span class="pill must">70 marks</span>
+          <span class="pill high">6 papers analysed</span>
+        </div>
+      </div>
+
+      <div class="hero-card" onclick="showPage('psa')">
+        <div class="code">EEPCC-08</div>
+        <div class="subj">Power System Analysis</div>
+        <div class="pills">
+          <span class="pill must">70 marks</span>
+          <span class="pill high">6 papers analysed</span>
+        </div>
+      </div>
+
+      <div class="hero-card" onclick="showPage('hev')">
+        <div class="code">EEPEC-01C</div>
+        <div class="subj">Hybrid Electrical Vehicle Design</div>
+        <div class="pills">
+          <span class="pill must">70 marks</span>
+          <span class="pill high">5 papers analysed</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-title">How to use this guide</div>
+    <div class="cards">
+      <div class="card">
+        <h4>Priority system (same across all subjects)</h4>
+        <ul>
+          <li><span class="pill must">MUST DO</span> — in every or almost every paper. Do first, no exceptions.</li>
+          <li><span class="pill high">HIGH</span> — in 4–5 of 6 papers. Your safety buffer.</li>
+          <li><span class="pill med">MEDIUM</span> — in 2–4 papers. Add these after MUST + HIGH are solid.</li>
+          <li><span class="pill low">LOW</span> — rare or never asked as a full question. MCQ-level only.</li>
+        </ul>
+      </div>
+      <div class="card">
+        <h4>Scoring the 65+</h4>
+        <ul>
+          <li>14 MCQ marks are the cheapest marks in the paper — target 14/14 in every subject.</li>
+          <li>You can drop ~5 marks in the 56-mark written section and still hit 65+.</li>
+          <li>Choice is built into Q2–Q5 (attempt any 4 of 5 / any 2 of 3) — you never need every topic.</li>
+          <li>Complete, well-structured answers beat partially-done safe answers. Half an answer loses more than a weak topic avoids.</li>
+        </ul>
+      </div>
+      <div class="card">
+        <h4>Exam-day approach (all subjects)</h4>
+        <ul>
+          <li>Spend the first 30 min on all 14 MCQs. Don't leave any blank.</li>
+          <li>Before picking written questions, read all options — choose completeness over perceived difficulty.</li>
+          <li>4-mark answers: 1 diagram + 4–5 points ≈ 10 min.</li>
+          <li>6-mark answers: full derivation or diagram + steps + boxed answer ≈ 15 min.</li>
+          <li>Don't start a new topic 24 hrs before the exam.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</main>
+</div>
+
+<!-- ═══════════════════════════════════════════════════ LCS PAGE ═══ -->
+<div id="lcs" class="page">
+<main>
+  <button class="back-btn" onclick="showPage('home')">← All subjects</button>
+  <div class="subj-header">
+    <div class="subj-code">EEPCC-09 · T.Y. B.Tech Electrical · Semester I</div>
+    <div class="subj-title">Linear Control System</div>
+    <div class="subj-meta">
+      <span>📋 70 marks (14 MCQ + 56 written)</span>
+      <span>📚 6 papers analysed (Oct 2022 → Apr 2026)</span>
+      <span>🎯 Target: 65+/70</span>
+    </div>
+  </div>
+
+  <div class="callout"><b>The short version:</b> 18 concepts dominate this paper. Block diagram + Mason's + Bode + Root locus + Routh-Hurwitz + error constants alone cover ~35/56 written marks plus 14 MCQ marks = 49 marks from 6 topics. Add F-V/F-I + RLC + 2nd-order numericals and you clear 65+ comfortably.</div>
+
+  <div class="tab-row">
+    <button class="tab-btn active" onclick="showTab('lcs','roi')">ROI & Roadmap</button>
+    <button class="tab-btn" onclick="showTab('lcs','repeated')">Repeated Questions</button>
+    <button class="tab-btn" onclick="showTab('lcs','top20')">Top 20</button>
+    <button class="tab-btn" onclick="showTab('lcs','mcq')">MCQ Checklist</button>
+    <button class="tab-btn" onclick="showTab('lcs','predict')">2026 Prediction</button>
+  </div>
+
+  <!-- ROI TAB -->
+  <div id="lcs-roi" class="tab-pane active">
+    <div class="section">
+      <div class="section-title">Unit-wise marks and priority</div>
+      <div class="tbl-wrap"><table>
+        <thead><tr><th>Unit</th><th>Key Topics</th><th>Freq</th><th>Avg marks/paper</th><th>Priority</th></tr></thead>
+        <tbody>
+          <tr><td>3 — Block Diagram / SFG / Mason's</td><td>Block diagram reduction, SFG terms, Mason's Gain Formula</td><td>6/6</td><td>~17 (×2 Qs)</td><td><span class="pill must">MUST DO</span></td></tr>
+          <tr><td>4 — Time Response / ESS</td><td>2nd-order numericals + derivation, error constants, controllers</td><td>5–6/6</td><td>~16</td><td><span class="pill must">MUST DO</span></td></tr>
+          <tr><td>5 — Stability / Root Locus</td><td>Routh-Hurwitz + special cases, root locus sketching</td><td>5–6/6</td><td>~14</td><td><span class="pill must">MUST DO</span></td></tr>
+          <tr><td>2 — Modelling (Elec/Mech/Servo)</td><td>F-V/F-I analogy, RLC T.F., mechanical system, AC/DC servomotor</td><td>5–6/6</td><td>~13</td><td><span class="pill must">MUST DO</span></td></tr>
+          <tr><td>6 — Frequency Response / Bode</td><td>Bode plot (GM, PM, ωgc, ωpc), frequency specs</td><td>6/6</td><td>~10</td><td><span class="pill must">MUST DO</span></td></tr>
+          <tr><td>1 — Intro / OL-CL / Sensitivity</td><td>OL vs CL, feedback effects, sensitivity</td><td>4–6/6</td><td>~8 (mostly MCQ)</td><td><span class="pill high">HIGH</span></td></tr>
+        </tbody>
+      </table></div>
+    </div>
+
+    <div class="section">
+      <div class="section-title">Full topic ROI table</div>
+      <div class="tbl-wrap"><table>
+        <thead><tr><th>Topic</th><th>Freq</th><th>Marks</th><th>Priority</th><th>Why</th></tr></thead>
+        <tbody>
+          <tr><td>Block diagram reduction → C(s)/R(s)</td><td>6/6</td><td>4–6</td><td><span class="pill must">MUST DO</span></td><td>In every paper, usually twice. Easiest guaranteed marks.</td></tr>
+          <tr><td>Mason's Gain Formula on a given SFG</td><td>6/6</td><td>4–6</td><td><span class="pill must">MUST DO</span></td><td>Formula-based, fast once practised.</td></tr>
+          <tr><td>Bode plot: GM, PM, ωgc, ωpc, stability comment</td><td>6/6</td><td>6</td><td><span class="pill must">MUST DO</span></td><td>Same 5-step procedure every year — highest ROI.</td></tr>
+          <tr><td>Root locus for G(s)=k/[s(s+a)(s+b)], stability comment</td><td>5/6</td><td>6</td><td><span class="pill must">MUST DO</span></td><td>Fixed rules, repeatable sketch.</td></tr>
+          <tr><td>Routh-Hurwitz stability / find range of K</td><td>5/6</td><td>4–6</td><td><span class="pill must">MUST DO</span></td><td>Formula-driven, low prep cost.</td></tr>
+          <tr><td>Unity feedback: type of system + Kp/Kv/Ka + ess</td><td>5/6</td><td>4–6</td><td><span class="pill must">MUST DO</span></td><td>Three marks in one question.</td></tr>
+          <tr><td>F-V analogy (mech → electrical circuit)</td><td>5/6</td><td>4–6</td><td><span class="pill high">HIGH</span></td><td>Conceptual + one diagram to memorise.</td></tr>
+          <tr><td>F-I analogy (mech → electrical circuit)</td><td>5/6</td><td>4–6</td><td><span class="pill high">HIGH</span></td><td>Same family as F-V, prepare together.</td></tr>
+          <tr><td>T.F. of electrical RLC network</td><td>5/6</td><td>4</td><td><span class="pill high">HIGH</span></td><td>Pure Laplace + circuit algebra.</td></tr>
+          <tr><td>2nd-order numerical: ζ, ωn, Mp, tp, ts, tr</td><td>5/6</td><td>4</td><td><span class="pill high">HIGH</span></td><td>Formula substitution only.</td></tr>
+          <tr><td>Frequency domain specs — define all terms</td><td>5/6</td><td>4</td><td><span class="pill high">HIGH</span></td><td>Pure theory, fast to revise.</td></tr>
+          <tr><td>OL vs CL systems + examples + advantages</td><td>4/6</td><td>4</td><td><span class="pill high">HIGH</span></td><td>Also MCQ-heavy every year.</td></tr>
+          <tr><td>Types of controllers: P, PI, PD, PID</td><td>4/6</td><td>4</td><td><span class="pill high">HIGH</span></td><td>Conceptual, short diagrams.</td></tr>
+          <tr><td>Stability vs pole location — all cases</td><td>4/6</td><td>4</td><td><span class="pill high">HIGH</span></td><td>Links Routh results to s-plane picture.</td></tr>
+          <tr><td>Derive rise time & peak time (2nd-order underdamped)</td><td>3/6</td><td>6</td><td><span class="pill med">MEDIUM</span></td><td>High marks when asked; derivation-heavy.</td></tr>
+          <tr><td>AC/DC Servomotor T.F. derivation</td><td>3/6</td><td>6</td><td><span class="pill med">MEDIUM</span></td><td>Long but fixed; learn once.</td></tr>
+          <tr><td>Mechanical (translational) system → T.F.</td><td>3/6</td><td>4</td><td><span class="pill med">MEDIUM</span></td><td>Uses same skill as electrical networks.</td></tr>
+          <tr><td>Sensitivity — define & derive (open loop)</td><td>4/6</td><td>4–6</td><td><span class="pill med">MEDIUM</span></td><td>Mostly early papers; still worth learning.</td></tr>
+          <tr><td>SFG terminologies only; polar plot; pole-zero plot</td><td>1–3/6</td><td>4</td><td><span class="pill low">LOW</span></td><td>Skip for full-length question; 1-mark MCQ only.</td></tr>
+        </tbody>
+      </table></div>
+    </div>
+
+    <div class="section">
+      <div class="section-title">Study roadmap — exactly this order</div>
+      <div class="steps">
+        <div class="step-item">
+          <div class="step-num">STEP 1</div>
+          <div class="step-label">Foundations — Units 1 & 2</div>
+          <div class="step-body">OL vs CL + feedback effects + sensitivity (quick theory) → F-V and F-I analogy (memorise mapping table cold) → RLC network T.F. (practise 3–4 numericals) → Mechanical system equations → T.F. → AC/DC servomotor derivation (learn once).</div>
+          <div class="step-marks">Why first: Units 3–6 assume you can write Laplace-domain equations.</div>
+        </div>
+        <div class="step-item">
+          <div class="step-num">STEP 2</div>
+          <div class="step-label">Block Diagrams, SFG & Mason's — Unit 3 · highest-value unit</div>
+          <div class="step-body">Block diagram reduction rules (series, parallel, feedback, moving points) → SFG terminology → Mason's Gain Formula (practise on 5–6 SFGs until automatic) → Combined: block diagram → SFG → Mason's in one question.</div>
+          <div class="step-marks">~17 marks · appears as 2 separate questions in almost every paper.</div>
+        </div>
+        <div class="step-item">
+          <div class="step-num">STEP 3</div>
+          <div class="step-label">Time Response — Unit 4</div>
+          <div class="step-body">2nd-order numericals (ζ, ωn, Mp, tp, ts, tr from given G(s)) → Derive rise time & peak time for underdamped system → Steady-state error + Kp/Kv/Ka for type-0/1/2 systems → Controllers P, PI, PD, PID (what each does, diagrams).</div>
+          <div class="step-marks">~16 marks · uses T.F. skill from Step 1.</div>
+        </div>
+        <div class="step-item">
+          <div class="step-num">STEP 4</div>
+          <div class="step-label">Stability & Root Locus — Unit 5</div>
+          <div class="step-body">Routh-Hurwitz + special cases (row of zeros, first-column zero) — practise 4–5 equations → Pole location in s-plane vs stability → Root locus: asymptotes, breakaway, angle of departure → Sketch 3-pole systems and comment on stability.</div>
+          <div class="step-marks">~14 marks · stability concepts reused in Bode (Step 5).</div>
+        </div>
+        <div class="step-item">
+          <div class="step-num">STEP 5</div>
+          <div class="step-label">Frequency Response — Unit 6</div>
+          <div class="step-body">Frequency domain specs (GM, PM, BW, resonant peak — definitions) → Bode plot: one fixed 5-step method (magnitude + phase, find ωgc & ωpc, read GM & PM, comment on stability) — repeat on 4–5 past-paper G(s)H(s) examples.</div>
+          <div class="step-marks">~10 marks · always 6 marks for the Bode question — nearly guaranteed once method is memorised.</div>
+        </div>
+        <div class="step-item">
+          <div class="step-num">FINAL REVISION</div>
+          <div class="step-label">3–4 days before exam</div>
+          <div class="step-body">Day −3: Redo Top 20 from memory, no notes, timed. Day −2: MCQ checklist (15 min) + re-derive 5 MUST derivations by hand. Day −1: Solve Apr 2026 paper timed. Morning of exam: only re-read MCQ checklist + F-V/F-I table + Bode procedure steps. Don't learn anything new in the final 24 hours.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- REPEATED Q TAB -->
+  <div id="lcs-repeated" class="tab-pane">
+    <div class="section">
+      <div class="section-title">Questions asked year after year (prepare once, covers multiple papers)</div>
+      <div class="tbl-wrap"><table>
+        <thead><tr><th>Topic / Concept</th><th>Freq</th><th>Marks</th><th>Years asked</th><th>Priority</th></tr></thead>
+        <tbody>
+          <tr><td>Block diagram reduction → find C(s)/R(s)</td><td>6/6</td><td>4–6</td><td>22–26 (all)</td><td><span class="pill must">MUST DO</span></td></tr>
+          <tr><td>Mason's Gain Formula — find T.F. from SFG</td><td>6/6</td><td>4–6</td><td>22–26 (all)</td><td><span class="pill must">MUST DO</span></td></tr>
+          <tr><td>Bode plot → GM, PM, ωgc, ωpc, stability comment</td><td>6/6</td><td>6</td><td>22–26 (all)</td><td><span class="pill must">MUST DO</span></td></tr>
+          <tr><td>Root locus G(s)=k/[s(s+a)(s+b)] + stability</td><td>5/6</td><td>6</td><td>22, 23M, 24, 25, 26</td><td><span class="pill must">MUST DO</span></td></tr>
+          <tr><td>Routh-Hurwitz: stability / range of K</td><td>5/6</td><td>4–6</td><td>22, 23O, 24, 25, 26</td><td><span class="pill must">MUST DO</span></td></tr>
+          <tr><td>Unity feedback: type + Kp/Kv/Ka + ess</td><td>5/6</td><td>4–6</td><td>22, 23O, 24, 25, 26</td><td><span class="pill must">MUST DO</span></td></tr>
+          <tr><td>F-V analogy with diagram</td><td>5/6</td><td>4–6</td><td>22, 23M, 23O, 24, 26</td><td><span class="pill high">HIGH</span></td></tr>
+          <tr><td>T.F. of electrical RLC network</td><td>5/6</td><td>4</td><td>22, 23M, 23O, 25, 26</td><td><span class="pill high">HIGH</span></td></tr>
+          <tr><td>2nd-order numerical: ζ, ωn, Mp, tp, ts, tr</td><td>5/6</td><td>4</td><td>22, 23M, 24, 25, 26</td><td><span class="pill high">HIGH</span></td></tr>
+          <tr><td>Frequency domain specs — explain all terms</td><td>5/6</td><td>4</td><td>22, 23M, 23O, 25, 26</td><td><span class="pill high">HIGH</span></td></tr>
+          <tr><td>OL vs CL — explain + examples + advantages</td><td>4/6</td><td>4</td><td>23M, 24, 25, 26</td><td><span class="pill high">HIGH</span></td></tr>
+          <tr><td>Controllers P / PI / PD / PID — explain + sketch</td><td>4/6</td><td>4</td><td>22, 23O, 24, 26</td><td><span class="pill high">HIGH</span></td></tr>
+          <tr><td>Stability vs pole location — explain cases</td><td>4/6</td><td>4</td><td>23O, 24, 25, 26</td><td><span class="pill high">HIGH</span></td></tr>
+          <tr><td>Derive rise time & peak time (2nd-order underdamped)</td><td>3/6</td><td>6</td><td>23M, 25, 26</td><td><span class="pill med">MEDIUM</span></td></tr>
+          <tr><td>AC/DC Servomotor T.F. derivation</td><td>3/6</td><td>6</td><td>23M, 23O, 25</td><td><span class="pill med">MEDIUM</span></td></tr>
+          <tr><td>Mechanical translational system → equations + T.F.</td><td>3/6</td><td>4</td><td>23M, 23O, 26</td><td><span class="pill med">MEDIUM</span></td></tr>
+          <tr><td>Sensitivity — define & derive (open loop)</td><td>4/6</td><td>4–6</td><td>22, 23M, 24</td><td><span class="pill med">MEDIUM</span></td></tr>
+        </tbody>
+      </table></div>
+    </div>
+  </div>
+
+  <!-- TOP 20 TAB -->
+  <div id="lcs-top20" class="tab-pane">
+    <div class="section">
+      <div class="section-title">Top 20 — master these and the paper can't surprise you</div>
+      <div class="top20">
+        <div class="top20-item"><span class="top20-num">1</span>Block diagram reduction — find C(s)/R(s)</div>
+        <div class="top20-item"><span class="top20-num">2</span>Mason's Gain Formula — apply on a given SFG</div>
+        <div class="top20-item"><span class="top20-num">3</span>Convert block diagram → SFG → apply Mason's</div>
+        <div class="top20-item"><span class="top20-num">4</span>Bode plot: GM, PM, ωgc, ωpc; comment on stability</div>
+        <div class="top20-item"><span class="top20-num">5</span>Root locus G(s)=k/[s(s+a)(s+b)]; comment on stability</div>
+        <div class="top20-item"><span class="top20-num">6</span>Routh-Hurwitz: determine stability from char. equation</div>
+        <div class="top20-item"><span class="top20-num">7</span>Routh-Hurwitz: find range of K for stability</div>
+        <div class="top20-item"><span class="top20-num">8</span>Given G(s), unity feedback: type + Kp/Kv/Ka + ess</div>
+        <div class="top20-item"><span class="top20-num">9</span>F-V analogy — mechanical → electrical analogous circuit</div>
+        <div class="top20-item"><span class="top20-num">10</span>F-I analogy — mechanical → electrical analogous circuit</div>
+        <div class="top20-item"><span class="top20-num">11</span>T.F. of electrical RLC network (Laplace domain)</div>
+        <div class="top20-item"><span class="top20-num">12</span>2nd-order numerical: ζ, ωn, Mp, tp, ts, tr from G(s)</div>
+        <div class="top20-item"><span class="top20-num">13</span>Frequency domain specifications — define all terms</div>
+        <div class="top20-item"><span class="top20-num">14</span>OL vs CL systems — explain + examples</div>
+        <div class="top20-item"><span class="top20-num">15</span>Controllers: P, PI, PD, PID — explain with diagrams</div>
+        <div class="top20-item"><span class="top20-num">16</span>Stability vs pole location — explain different cases</div>
+        <div class="top20-item"><span class="top20-num">17</span>Derive rise time & peak time (2nd-order underdamped)</div>
+        <div class="top20-item"><span class="top20-num">18</span>Derive T.F. of AC or DC Servomotor</div>
+        <div class="top20-item"><span class="top20-num">19</span>Mechanical translational system — equations → T.F.</div>
+        <div class="top20-item"><span class="top20-num">20</span>Sensitivity — define & derive (open loop)</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- MCQ TAB -->
+  <div id="lcs-mcq" class="tab-pane">
+    <div class="section">
+      <div class="section-title">14/14 MCQ checklist — know these cold before the exam</div>
+      <div class="mcq-grid">
+        <div class="mcq-item"><strong>Transient response</strong><span>Due to stored energy in system components.</span></div>
+        <div class="mcq-item"><strong>Feedback effect</strong><span>↑ stability, ↑ bandwidth, ↓ sensitivity, ↓ disturbance effect.</span></div>
+        <div class="mcq-item"><strong>F-V analogy</strong><span>Mass→L, Spring→1/C, Friction→R, Force→V, Velocity→current.</span></div>
+        <div class="mcq-item"><strong>F-I analogy</strong><span>Mass→C, Spring→1/L, Friction→1/R, Force→current, Velocity→V.</span></div>
+        <div class="mcq-item"><strong>Best test signal</strong><span>Unit impulse (contains all frequencies).</span></div>
+        <div class="mcq-item"><strong>Type-N system</strong><span>N poles at origin. Type-0: Kp finite. Type-1: Kp=∞, Kv finite. Type-2: Kp=Kv=∞, Ka finite.</span></div>
+        <div class="mcq-item"><strong>AC Servomotor</strong><span>2-phase induction motor. Synchro = electromagnetic transducer.</span></div>
+        <div class="mcq-item"><strong>Stability condition (Bode)</strong><span>GM > 0 dB AND PM > 0° — both must be positive simultaneously.</span></div>
+        <div class="mcq-item"><strong>Root locus basics</strong><span>Branches = no. of open-loop poles; symmetric about the real axis.</span></div>
+        <div class="mcq-item"><strong>Root locus angle condition</strong><span>±(2q+1)×180°. Increasing K can reduce damping ratio.</span></div>
+        <div class="mcq-item"><strong>Routh-Hurwitz</strong><span>Sign change in first column → roots in RHP → unstable.</span></div>
+        <div class="mcq-item"><strong>Bode slopes</strong><span>Gain K → 0 dB/dec; simple pole → −20 dB/dec; simple zero → +20 dB/dec.</span></div>
+        <div class="mcq-item"><strong>Decade vs Octave</strong><span>Decade: ω₂/ω₁ = 10. Octave: ω₂/ω₁ = 2.</span></div>
+        <div class="mcq-item"><strong>Error coefficients</strong><span>Kp = lim(s→0) G(s); Kv = lim(s→0) sG(s); Ka = lim(s→0) s²G(s).</span></div>
+        <div class="mcq-item"><strong>Common trap</strong><span>Rise time is TIME-domain, NOT frequency-domain. "Which is NOT a freq-domain spec" → rise time.</span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- PREDICT TAB -->
+  <div id="lcs-predict" class="tab-pane">
+    <div class="section">
+      <div class="section-title">Oct/Nov 2026 prediction (pattern-based, not guaranteed)</div>
+      <div class="tbl-wrap"><table>
+        <thead><tr><th>Marks</th><th>Likely topic</th><th>Confidence</th></tr></thead>
+        <tbody>
+          <tr><td>6 mk</td><td>Bode plot construction (GM, PM, ωgc, ωpc) — every single year</td><td class="conf-h">High</td></tr>
+          <tr><td>6 mk</td><td>Root locus sketch G(s)=k/[s(s+a)(s+b)] + stability comment</td><td class="conf-h">High</td></tr>
+          <tr><td>4–6 mk</td><td>Block diagram reduction OR Mason's Gain Formula (one in Q2, other in Q3)</td><td class="conf-h">High</td></tr>
+          <tr><td>4–6 mk</td><td>Unity feedback: type + all error constants + ess for given input</td><td class="conf-h">High</td></tr>
+          <tr><td>4 mk</td><td>Frequency domain specifications — explain/define</td><td class="conf-h">High</td></tr>
+          <tr><td>4 mk</td><td>Routh-Hurwitz stability of given characteristic equation</td><td class="conf-h">High</td></tr>
+          <tr><td>4–6 mk</td><td>2nd-order underdamped derivation (rise/peak time) OR numerical</td><td class="conf-m">Medium</td></tr>
+          <tr><td>4–6 mk</td><td>F-V or F-I analogy — mechanical system → analogous circuit</td><td class="conf-m">Medium</td></tr>
+          <tr><td>4 mk</td><td>Types of controllers (P/PI/PD/PID) with diagrams</td><td class="conf-m">Medium</td></tr>
+          <tr><td>4 mk</td><td>Electrical RLC network transfer function</td><td class="conf-m">Medium</td></tr>
+          <tr><td>4–6 mk</td><td>AC/DC Servomotor T.F. (hasn't appeared since Mar 2025)</td><td class="conf-m">Medium</td></tr>
+          <tr><td>4–6 mk</td><td>Sensitivity definition + derivation (last seen Mar 2024)</td><td class="conf-l">Low–Medium</td></tr>
+          <tr><td>MCQ</td><td>F-V/F-I analogy mapping, type-N system, Bode slopes, root locus rules, GM/PM condition</td><td class="conf-h">High</td></tr>
+        </tbody>
+      </table></div>
+    </div>
+  </div>
+</main>
+</div>
+
+<!-- ═══════════════════════════════════════════════════ EM PAGE ═══ -->
+<div id="em" class="page">
+<main>
+  <button class="back-btn" onclick="showPage('home')">← All subjects</button>
+  <div class="subj-header">
+    <div class="subj-code">EEPCC-07 · T.Y. B.Tech Electrical · Semester I</div>
+    <div class="subj-title">Electromagnetic Engineering</div>
+    <div class="subj-meta">
+      <span>📋 70 marks (14 MCQ + 56 written)</span>
+      <span>📚 6 papers analysed (Oct 2022 → Apr 2026)</span>
+      <span>🎯 Target: 65+/70</span>
+    </div>
+  </div>
+
+  <div class="callout"><b>The short version:</b> ~20 topics cover nearly every question across 6 papers. Mar 2025 was a word-for-word repeat of Mar 2024. Apr 2026 reused 11 of 15 descriptive parts. Learn deeply on fewer topics — half-answers on 6-markers cost more than your entire margin.</div>
+
+  <div class="tab-row">
+    <button class="tab-btn active" onclick="showTab('em','roadmap')">Roadmap</button>
+    <button class="tab-btn" onclick="showTab('em','repeated')">Repeated Questions</button>
+    <button class="tab-btn" onclick="showTab('em','top20')">Top 20</button>
+    <button class="tab-btn" onclick="showTab('em','numericals')">Practice Numericals</button>
+    <button class="tab-btn" onclick="showTab('em','mcq')">MCQ Checklist</button>
+    <button class="tab-btn" onclick="showTab('em','predict')">2026 Prediction</button>
+  </div>
+
+  <div id="em-roadmap" class="tab-pane active">
+    <div class="section">
+      <div class="section-title">Unit priority overview</div>
+      <div class="tbl-wrap"><table>
+        <thead><tr><th>Unit</th><th>Important topics</th><th>Freq</th><th>Marks on offer</th><th>Priority</th></tr></thead>
+        <tbody>
+          <tr><td>1 — Vectors & coordinates</td><td>Transformations, dot/cross, grad/div/curl, ∇·(∇×V)=0</td><td>6/6</td><td>~8 + 3–4 MCQ</td><td><span class="pill must">MUST DO</span></td></tr>
+          <tr><td>2 — Coulomb / Gauss</td><td>Gauss, E from charges, forces, divergence theorem, E–V</td><td>6/6</td><td>~22 + 3–4 MCQ</td><td><span class="pill must">MUST DO</span></td></tr>
+          <tr><td>3 — Conductors / dielectrics</td><td>Capacitor, continuity, Poisson/Laplace, uniqueness</td><td>6/6</td><td>~8 + 2 MCQ</td><td><span class="pill high">HIGH</span></td></tr>
+          <tr><td>4 — Static magnetic field</td><td>Biot–Savart, Ampère, Stokes, vector potential, force</td><td>6/6</td><td>14–28 + 2 MCQ</td><td><span class="pill must">MUST DO</span></td></tr>
+          <tr><td>5 — Magnetic materials</td><td>Boundary conditions, inductance/energy, material types</td><td>6/6</td><td>6–14 + 2 MCQ</td><td><span class="pill must">MUST DO</span></td></tr>
+          <tr><td>6 — Maxwell's equations</td><td>Derivation from Gauss, full set + word statements, disp. current</td><td>6/6</td><td>4–10 + 1 MCQ</td><td><span class="pill must">MUST DO</span></td></tr>
+        </tbody>
+      </table></div>
+    </div>
+    <div class="section">
+      <div class="section-title">Study stages (do in order)</div>
+      <div class="steps">
+        <div class="step-item">
+          <div class="step-num">STAGE 1 — ~4 hrs</div>
+          <div class="step-label">Unit 1: Vectors & coordinate systems</div>
+          <div class="step-body">Dot/cross product, unit vector, component of E along F, perpendicular unit vector → Gradient, divergence, curl + prove ∇·(∇×V)=0 → Cylindrical & spherical: conversion formulas + dv → Transform a vector at a point (3 examples each system).</div>
+          <div class="step-marks">Move on when: transform A=4ax−2ay−4az at (2,3,5) to cylindrical in 5 min without notes. Know all three dv expressions from memory.</div>
+        </div>
+        <div class="step-item">
+          <div class="step-num">STAGE 2 — ~10–12 hrs</div>
+          <div class="step-label">Unit 2: Coulomb's law and Gauss (biggest block)</div>
+          <div class="step-body">Coulomb's law (vector form), E definition, force between charges (triangle problem) → E from point, line and sheet charge — derive infinite sheet → Gauss's law: proof + two applications → Divergence theorem: verify both sides, find charge from D → Potential: E=−∇V, work done → Derive Maxwell's 1st equation (∇·D=ρv) from Gauss right now — asked in 5/6 papers.</div>
+          <div class="step-marks">Move on when: derive Gauss + one application, derive E for infinite sheet from scratch, solve 75π and 32 C problems.</div>
+        </div>
+        <div class="step-item">
+          <div class="step-num">STAGE 3 — ~4–5 hrs</div>
+          <div class="step-label">Unit 3: Conductors and dielectrics</div>
+          <div class="step-body">Parallel-plate capacitor: derive C=εA/d + numeric (asked 4/6 papers) → J=σE, continuity equation ∇·J=−∂ρ/∂t → Poisson's and Laplace's equations (derive) + uniqueness theorem → Electrostatic energy density + electric boundary conditions (MCQ insurance).</div>
+          <div class="step-marks">Move on when: capacitor derivation, continuity equation, Poisson's equation once from memory.</div>
+        </div>
+        <div class="step-item">
+          <div class="step-num">STAGE 4 — ~12–14 hrs</div>
+          <div class="step-label">Unit 4: Static magnetic field (can be 28 marks in one paper)</div>
+          <div class="step-body">Biot–Savart → H of finite filament → infinite filament → circular loop on axis → Ampère's circuital law: proof, point form ∇×H=J, one application → Stokes' theorem: verify both sides on the y²z/x problem → Magnetic flux density (∇·B=0) + vector magnetic potential (B=∇×A) → Lorentz force, force on wire, force between current elements.</div>
+          <div class="step-marks">Move on when: all three filament-H numericals, prove Ampère's law, verify Stokes' without peeking.</div>
+        </div>
+        <div class="step-item">
+          <div class="step-num">STAGE 5 — ~6–7 hrs</div>
+          <div class="step-label">Unit 5: Fields in magnetic materials</div>
+          <div class="step-body">Magnetic boundary conditions — derive both (most repeated 6-marker of Section II) → Inductance of solenoid and toroid (rectangular cross-section); energy ½LI² and energy density ½μH² → Dia/para/ferro/anti-ferro classification → Potential energy and forces on a magnetic material.</div>
+          <div class="step-marks">Move on when: both boundary conditions and toroid inductance in under 12 minutes.</div>
+        </div>
+        <div class="step-item">
+          <div class="step-num">STAGE 6 — ~3–4 hrs</div>
+          <div class="step-label">Unit 6: Maxwell's equations</div>
+          <div class="step-body">All four equations in point and integral form + word statements (6-marker in Apr 2026) → Displacement current Jd=∂D/∂t; conduction vs displacement current in lossy dielectric → Time-varying and harmonic (jω) forms.</div>
+          <div class="step-marks">Move on when: write all four equations in both forms, name each, state each in words.</div>
+        </div>
+        <div class="step-item">
+          <div class="step-num">STAGE 7 — FINAL</div>
+          <div class="step-label">Revision: no new topics</div>
+          <div class="step-body">MCQ checklist twice → redo all practice numericals timed → sit Apr 2026 first, then Mar 2024 as two 3-hour papers (MCQs in first 30 min each) → fix only what you got wrong.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="em-repeated" class="tab-pane">
+    <div class="section">
+      <div class="section-title">Repeated questions — grouped by concept</div>
+      <div class="tbl-wrap"><table>
+        <thead><tr><th>#</th><th>Topic (grouped wordings)</th><th>Freq</th><th>Marks</th><th>Years</th><th>Priority</th></tr></thead>
+        <tbody>
+          <tr><td>1</td><td>Gauss law — state / prove / two applications</td><td>6/6</td><td>4–6</td><td>All six</td><td><span class="pill must">MUST DO</span></td></tr>
+          <tr><td>2</td><td>Maxwell's equations — from Gauss (point + integral); full set with word statements</td><td>6/6</td><td>4–8</td><td>O22, M23, O23×2, M24, M25, A26×2</td><td><span class="pill must">MUST DO</span></td></tr>
+          <tr><td>3</td><td>Magnetic boundary conditions (derive)</td><td>5/6</td><td>6</td><td>M23, O23, M24, M25, A26</td><td><span class="pill must">MUST DO</span></td></tr>
+          <tr><td>4</td><td>Stokes' theorem — verify both sides / state and explain</td><td>5/6</td><td>6–8</td><td>O22, M23, M24, M25, A26</td><td><span class="pill must">MUST DO</span></td></tr>
+          <tr><td>5</td><td>Ampère's circuital law — prove, point form, application</td><td>5/6</td><td>4–6</td><td>M23, O23, M24, M25, A26</td><td><span class="pill must">MUST DO</span></td></tr>
+          <tr><td>6</td><td>Biot–Savart — H of finite/infinite filament, circular loop, statement</td><td>5/6</td><td>4–6</td><td>O22, O23, M24, M25, A26</td><td><span class="pill must">MUST DO</span></td></tr>
+          <tr><td>7</td><td>E from sheet/line/point charge; Coulomb force numericals</td><td>5/6</td><td>6–8</td><td>O22, M23, M24, M25, A26</td><td><span class="pill must">MUST DO</span></td></tr>
+          <tr><td>8</td><td>Parallel-plate capacitor — derive C and/or numeric</td><td>4/6</td><td>4–8</td><td>O22, M24, M25, A26</td><td><span class="pill must">MUST DO</span></td></tr>
+          <tr><td>9</td><td>Transform a vector at a point (cylindrical / spherical)</td><td>4/6</td><td>4–8</td><td>O22, M24, M25, A26</td><td><span class="pill must">MUST DO</span></td></tr>
+          <tr><td>10</td><td>Vector algebra and operators — dot, angle, component, gradient, ∇·(∇×V)=0</td><td>6/6</td><td>4</td><td>All six</td><td><span class="pill must">MUST DO</span></td></tr>
+          <tr><td>11</td><td>Divergence theorem — verify / total charge from D</td><td>4/6</td><td>6</td><td>M23, O23, M24, M25</td><td><span class="pill high">HIGH</span></td></tr>
+          <tr><td>12</td><td>E–V relation — derive, E from V, work done</td><td>5/6</td><td>4</td><td>O22, M23, O23, M24, M25</td><td><span class="pill high">HIGH</span></td></tr>
+          <tr><td>13</td><td>Inductance and energy — solenoid, toroid, energy in inductor</td><td>3/6</td><td>4–8</td><td>O22×2, M23, A26</td><td><span class="pill high">HIGH</span></td></tr>
+          <tr><td>14</td><td>Continuity equation of current</td><td>3/6</td><td>4–6</td><td>O23, M24, M25</td><td><span class="pill high">HIGH</span></td></tr>
+          <tr><td>15</td><td>Poisson / Laplace derivation; uniqueness theorem</td><td>3/6</td><td>4–6</td><td>O22, O23, A26</td><td><span class="pill high">HIGH</span></td></tr>
+          <tr><td>16</td><td>Vector magnetic potential (B=∇×A)</td><td>3/6</td><td>4</td><td>M23, M24, M25</td><td><span class="pill high">HIGH</span></td></tr>
+          <tr><td>17</td><td>Force on current wire / between elements / on magnetic material</td><td>4/6</td><td>4–6</td><td>M23, O23, M24, M25</td><td><span class="pill high">HIGH</span></td></tr>
+          <tr><td>18</td><td>Define E and D; Coulomb's law statement</td><td>3/6</td><td>4</td><td>M23, O23, A26</td><td><span class="pill med">MEDIUM</span></td></tr>
+          <tr><td>19</td><td>Nature of magnetic materials (dia/para/ferro/anti-ferro)</td><td>1/6 + MCQs</td><td>4</td><td>A26</td><td><span class="pill med">MEDIUM</span></td></tr>
+          <tr><td>20</td><td>Conduction vs displacement current (lossy dielectric)</td><td>1/6</td><td>4</td><td>O22</td><td><span class="pill med">MEDIUM</span></td></tr>
+        </tbody>
+      </table></div>
+      <div class="callout"><b>Exact repeats to memorise:</b> Capacitor numeric (0.04 m², εr=2, d=1 cm, V=10 V) — M24, M25, A26. Stokes problem H=(y²z/x)ax + (0.5y²z²/x²)az — M24, M25, A26. Divergence theorem with D=(5r²/4)ar — M23, O23. Total charge D=4x³ax−2yay+2zaz — M24, M25.</div>
+    </div>
+  </div>
+
+  <div id="em-top20" class="tab-pane">
+    <div class="section">
+      <div class="section-title">Top 20 — tick each one when you can do it from memory</div>
+      <div class="top20">
+        <div class="top20-item"><span class="top20-num">1</span>Gauss law: state, derive, two applications (sphere + line or sheet)</div>
+        <div class="top20-item"><span class="top20-num">2</span>Maxwell from Gauss (point + integral) + full set with word statements</div>
+        <div class="top20-item"><span class="top20-num">3</span>Magnetic boundary conditions (derive Bn and Ht with pillbox + loop)</div>
+        <div class="top20-item"><span class="top20-num">4</span>Stokes' theorem: verify both sides of the y²z/x problem</div>
+        <div class="top20-item"><span class="top20-num">5</span>Ampère's law: prove (integral + point form), one application</div>
+        <div class="top20-item"><span class="top20-num">6</span>Biot–Savart: H of finite and infinite filament (α₁, α₂ angle method)</div>
+        <div class="top20-item"><span class="top20-num">7</span>H on the axis of a circular loop: Ia²/2(a²+h²)³/²</div>
+        <div class="top20-item"><span class="top20-num">8</span>E from sheet, line and point charge; combined numericals</div>
+        <div class="top20-item"><span class="top20-num">9</span>Parallel-plate capacitor: derivation + numeric (C≈70.8 pF)</div>
+        <div class="top20-item"><span class="top20-num">10</span>Vector transformation at a point (cylindrical + spherical)</div>
+        <div class="top20-item"><span class="top20-num">11</span>Vector numericals: dot, angle, component, gradient, ∇·(∇×V)=0</div>
+        <div class="top20-item"><span class="top20-num">12</span>Divergence theorem verify (75π) + total charge (32 C)</div>
+        <div class="top20-item"><span class="top20-num">13</span>Coulomb's law (vector form) + force between charges</div>
+        <div class="top20-item"><span class="top20-num">14</span>E=−∇V derivation, E from V, work done (W=−Q∫E·dl)</div>
+        <div class="top20-item"><span class="top20-num">15</span>Inductance: solenoid, toroid, energy ½LI²</div>
+        <div class="top20-item"><span class="top20-num">16</span>Continuity equation + J=σE</div>
+        <div class="top20-item"><span class="top20-num">17</span>Poisson / Laplace + uniqueness theorem</div>
+        <div class="top20-item"><span class="top20-num">18</span>Vector magnetic potential (B=∇×A)</div>
+        <div class="top20-item"><span class="top20-num">19</span>Lorentz force / force on wire / force on magnetic material</div>
+        <div class="top20-item"><span class="top20-num">20</span>Nature of magnetic materials (dia/para/ferro/anti-ferro table)</div>
+      </div>
+    </div>
+  </div>
+
+  <div id="em-numericals" class="tab-pane">
+    <div class="section">
+      <div class="section-title">Practice numericals with answers (verify against Hayt/Edminister/GSN Raju)</div>
+      <div class="tbl-wrap"><table>
+        <thead><tr><th>#</th><th>Problem</th><th>Papers</th><th>Key answer / method</th></tr></thead>
+        <tbody>
+          <tr><td>1</td><td>Parallel-plate capacitor: 0.04 m², εr=2, d=1 cm, V=10 V</td><td>M24, M25, A26</td><td>C=ε₀εrA/d ≈ 70.8 pF; Q=CV ≈ 0.708 nC</td></tr>
+          <tr><td>2</td><td>Stokes: H=(y²z/x)ax + (0.5y²z²/x²)az; plane y=2, x,z from 1→2</td><td>M24, M25, A26</td><td>(∇×H)y = y²/x + y²z²/x³. I = 3.5 + 4 ln 2 ≈ 6.27 A</td></tr>
+          <tr><td>3</td><td>Divergence theorem: D=(5r²/4)ar, r=1 to 2 m</td><td>M23, O23</td><td>∇·D=5r. Volume integral = surface: 80π−5π=75π ≈ 235.6 C</td></tr>
+          <tr><td>4</td><td>Total charge: D=4x³ax−2yay+2zaz, cube −1≤x,y,z≤1</td><td>M24, M25</td><td>∇·D=12x² → Q=32 C</td></tr>
+          <tr><td>5</td><td>Three charges 1µC, 1µC, 0.5µC at corners of 50 cm equilateral triangle: force on Q3</td><td>M24, M25</td><td>Each pair 18 mN, 60° apart → F=31.2 mN along bisector</td></tr>
+          <tr><td>6</td><td>Circular loop a=3 m, I=10 A: H at (0,0,4)</td><td>O23</td><td>H=Ia²/[2(a²+h²)³/²] = 0.36 az A/m</td></tr>
+          <tr><td>7</td><td>Filament 5 A in ay at x=2, z=−2: H at origin</td><td>A26</td><td>ρ=2√2 → H=0.28 A/m = 0.199(ax+az) A/m</td></tr>
+          <tr><td>8</td><td>Filament 3ax A along x-axis: H at P(−1,3,2)</td><td>M24, M25</td><td>ρ=√13 → |H|=0.132 A/m = −0.073ay+0.110az A/m</td></tr>
+          <tr><td>9</td><td>Transform A=4ax−2ay−4az to cylindrical at (2,3,5)</td><td>A26</td><td>φ=56.3°; Aρ=0.555; Aφ=−4.44; Az=−4</td></tr>
+          <tr><td>10</td><td>Transform A=3ax+4ay+5az to spherical at (3,4,5)</td><td>M24, M25</td><td>r=7.07, θ=45°, φ=53.1° → A=7.07 ar (Aθ=Aφ=0)</td></tr>
+          <tr><td>11</td><td>Gradient of ∅=3x²y−y³z² at (1,−2,1)</td><td>M24, M25</td><td>∇∅=(−12, −9, 16)</td></tr>
+          <tr><td>12</td><td>E=3ay+4az, F=4ax−10ay+5az: component of E along F; unit vector perpendicular to both</td><td>M23, O23</td><td>E·F=−10; comp=(−10/141)F. E×F=(55,16,−12) → unit=(0.940, 0.273, −0.205)</td></tr>
+          <tr><td>13</td><td>E=2xax−4yay V/m: work moving +2 C from (2,0,0)→(0,0,0)→(0,2,0)</td><td>O23</td><td>W=8 J + 16 J = 24 J</td></tr>
+        </tbody>
+      </table></div>
+    </div>
+  </div>
+
+  <div id="em-mcq" class="tab-pane">
+    <div class="section">
+      <div class="section-title">14/14 MCQ checklist</div>
+      <div class="mcq-grid">
+        <div class="mcq-item"><strong>Unit vector</strong><span>Magnitude = 1, with a direction. A·B=0 → perpendicular; A×B=0 → parallel.</span></div>
+        <div class="mcq-item"><strong>Triangle area</strong><span>½|A×B|</span></div>
+        <div class="mcq-item"><strong>Operators</strong><span>Gradient: scalar→vector. Divergence: vector→scalar. Curl: vector→vector.</span></div>
+        <div class="mcq-item"><strong>Divergence identities</strong><span>∇·(xi+yj+zk)=3; ∇·B=0</span></div>
+        <div class="mcq-item"><strong>dv expressions</strong><span>Cylindrical: ρ dρ dφ dz. Spherical: r² sinθ dr dθ dφ.</span></div>
+        <div class="mcq-item"><strong>Spherical → Cartesian</strong><span>x=r sinθ cosφ; y=r sinθ sinφ; z=r cosθ; φ=tan⁻¹(y/x)</span></div>
+        <div class="mcq-item"><strong>E field</strong><span>Force per unit charge on a test charge. Unit: V/m. E=−∇V.</span></div>
+        <div class="mcq-item"><strong>D field</strong><span>D=εE (ε₀E in free space). Unit of J: A/m².</span></div>
+        <div class="mcq-item"><strong>Gauss's law</strong><span>Total flux through closed surface = charge enclosed.</span></div>
+        <div class="mcq-item"><strong>Infinite sheet</strong><span>E=ρs/2ε. E=0 inside a hollow charged sphere.</span></div>
+        <div class="mcq-item"><strong>Capacitance</strong><span>C=Q/V. Unit: C/V = F. ↑ with area, ↓ with distance. C≈70.8 pF for the standard numeric.</span></div>
+        <div class="mcq-item"><strong>Energy density</strong><span>Electric: ½εE². Magnetic: ½μH² = ½BH.</span></div>
+        <div class="mcq-item"><strong>Ampère's law</strong><span>∇×H=J and ∮H·dl=I are both Ampère's law.</span></div>
+        <div class="mcq-item"><strong>Biot–Savart</strong><span>Gives magnetic field of a current element. Analogue of Coulomb's law.</span></div>
+        <div class="mcq-item"><strong>B and A</strong><span>B=∇×A (vector potential); ∇·B=0; ∇·H=0.</span></div>
+        <div class="mcq-item"><strong>Lorentz force</strong><span>F=Q(E+v×B). Wire: F=IL×B.</span></div>
+        <div class="mcq-item"><strong>Stokes vs Divergence</strong><span>Stokes: line integral ↔ surface integral. Divergence: closed surface ↔ volume.</span></div>
+        <div class="mcq-item"><strong>Flux linkage</strong><span>N × Φ. Energy in inductor: ½LI².</span></div>
+        <div class="mcq-item"><strong>Permeability</strong><span>Metal μr ≈ 1. Anti-ferro: MnO, Cr₂O₃, FeO. Ferro: Fe, Co, Ni. Dia: Zn, Bi, Ag, Au.</span></div>
+        <div class="mcq-item"><strong>Maxwell equations</strong><span>∇×E=−∂B/∂t; ∇×H=J+∂D/∂t; ∇·D=ρv; ∇·B=0. B=15t → curl E=−15.</span></div>
+        <div class="mcq-item"><strong>Tangential E</strong><span>Continuous across a boundary: Et1=Et2.</span></div>
+        <div class="mcq-item"><strong>Boundary at air</strong><span>Surface density 10⁻⁹ at air boundary → E=ρs/ε₀=36π.</span></div>
+      </div>
+    </div>
+  </div>
+
+  <div id="em-predict" class="tab-pane">
+    <div class="section">
+      <div class="section-title">Oct/Nov 2026 prediction</div>
+      <div class="tbl-wrap"><table>
+        <thead><tr><th>Area</th><th>Likely topic</th><th>Confidence</th></tr></thead>
+        <tbody>
+          <tr><td>6-mark Q3</td><td>Gauss + two applications</td><td class="conf-h">High</td></tr>
+          <tr><td>6-mark Q3</td><td>E from sheet / line / point charge</td><td class="conf-m">Med-High</td></tr>
+          <tr><td>6-mark Q3</td><td>Divergence theorem verification (absent in A26 — may return)</td><td class="conf-m">Medium</td></tr>
+          <tr><td>6-mark Q5</td><td>Magnetic boundary conditions</td><td class="conf-h">High</td></tr>
+          <tr><td>6-mark Q5</td><td>Stokes' verification (topic near-certain; exact field may change)</td><td class="conf-h">High</td></tr>
+          <tr><td>6-mark Q5</td><td>Maxwell's set with word statements</td><td class="conf-m">Medium</td></tr>
+          <tr><td>4-mark Q2</td><td>Vector transformation; gradient numerical; Maxwell from Gauss; filament H</td><td class="conf-h">High</td></tr>
+          <tr><td>4-mark Q2</td><td>Capacitor numeric (3 papers in a row); Ampère in point form</td><td class="conf-m">Med-High</td></tr>
+          <tr><td>4-mark Q4</td><td>Biot–Savart filament; inductance; vector potential; Lorentz/force</td><td class="conf-m">Medium</td></tr>
+          <tr><td>Rotation candidates</td><td>Divergence theorem, continuity, vector potential, force on wire, solenoid, uniqueness — all absent from A26</td><td class="conf-m">Medium</td></tr>
+          <tr><td>MCQ</td><td>Coordinate formulas, E definition, capacitance, ∇×H=J</td><td class="conf-h">High</td></tr>
+          <tr><td>MCQ</td><td>Lorentz force, B=∇×A, energy densities, flux linkage</td><td class="conf-m">Med-High</td></tr>
+        </tbody>
+      </table></div>
+    </div>
+  </div>
+</main>
+</div>
+
+<!-- ══════════════════════════════════════════════════ PSA PAGE ═══ -->
+<div id="psa" class="page">
+<main>
+  <button class="back-btn" onclick="showPage('home')">← All subjects</button>
+  <div class="subj-header">
+    <div class="subj-code">EEPCC-08 · T.Y. B.Tech Electrical · Semester I</div>
+    <div class="subj-title">Power System Analysis</div>
+    <div class="subj-meta">
+      <span>📋 70 marks (14 MCQ + 56 written)</span>
+      <span>📚 6 papers analysed (Oct 2022 → Apr 2026)</span>
+      <span>🎯 Target: 65+/70</span>
+    </div>
+  </div>
+
+  <div class="callout"><b>The short version:</b> Mar 2023 and Oct 2023 are the same paper. Apr 2026 reused 12 of 16 theory sub-questions from earlier papers. The MUST DO topics cover 78% of all marks — Unit 1 (PU + Y-bus), Unit 4 (faults), Unit 5 (load flow), Unit 3 (symmetrical components), and Unit 6 (stability) are your core.</div>
+
+  <div class="tab-row">
+    <button class="tab-btn active" onclick="showTab('psa','roi')">ROI & Roadmap</button>
+    <button class="tab-btn" onclick="showTab('psa','repeated')">Repeated Questions</button>
+    <button class="tab-btn" onclick="showTab('psa','top20')">Top 20</button>
+    <button class="tab-btn" onclick="showTab('psa','mcq')">MCQ Checklist</button>
+    <button class="tab-btn" onclick="showTab('psa','predict')">2026 Prediction</button>
+  </div>
+
+  <div id="psa-roi" class="tab-pane active">
+    <div class="section">
+      <div class="section-title">Unit priority</div>
+      <div class="tbl-wrap"><table>
+        <thead><tr><th>Unit</th><th>Key topics</th><th>Freq</th><th>Est. marks in your 56</th><th>Priority</th></tr></thead>
+        <tbody>
+          <tr><td>1 — Components, PU, Y-bus</td><td>PU system, reactance/SLD numericals, Y-bus</td><td>6/6</td><td>~14</td><td><span class="pill must">MUST DO #1</span></td></tr>
+          <tr><td>4 — Unsymmetrical faults</td><td>LG, LLG, LL, open conductor, numericals</td><td>6/6</td><td>~12</td><td><span class="pill must">MUST DO #2</span></td></tr>
+          <tr><td>5 — Load flow</td><td>Bus types, rectangular equations, G-S, N-R</td><td>6/6</td><td>~10</td><td><span class="pill must">MUST DO #3</span></td></tr>
+          <tr><td>3 — Symmetrical components</td><td>Derivation + numericals</td><td>6/6</td><td>~8</td><td><span class="pill must">MUST DO #4</span></td></tr>
+          <tr><td>6 — Stability</td><td>Swing equation, EAC, improving TS</td><td>6/6</td><td>~7</td><td><span class="pill high">HIGH (topics MUST)</span></td></tr>
+          <tr><td>2 — Symmetrical faults</td><td>CB selection, reactors, transients</td><td>5/6</td><td>~5</td><td><span class="pill high">HIGH</span></td></tr>
+        </tbody>
+      </table></div>
+    </div>
+    <div class="section">
+      <div class="section-title">Study roadmap (6 blocks, do in order)</div>
+      <div class="steps">
+        <div class="step-item"><div class="step-num">BLOCK 1 — 3–4 hrs</div><div class="step-label">PU + base change + reactance diagram</div><div class="step-body">Solve the 25 MVA/13.8 kV and 300 MVA standard problems. Know Z_pu,new = Z_pu,old × (kV_old/kV_new)² × (MVA_new/MVA_old).</div></div>
+        <div class="step-item"><div class="step-num">BLOCK 2 — 3–4 hrs</div><div class="step-label">Y-bus (inspection + singular transformation) + 4-bus numerical</div><div class="step-body">Inspection: Yii = sum of admittances at bus i; Yij = −admittance between i and j. Singular transformation: [Y] = [A]ᵀ[y][A]. Practise the 4-bus numerical (appears every year).</div></div>
+        <div class="step-item"><div class="step-num">BLOCK 3 — 4–5 hrs</div><div class="step-label">Symmetrical components derivation + 4 numericals</div><div class="step-body">Derive Ia=Ia0+Ia1+Ia2 using the a-operator. Find I0, I1, I2 from unbalanced currents. Practise the 10+j20, 12−j10, −3−j5 and the 25°/30°/180° problems.</div></div>
+        <div class="step-item"><div class="step-num">BLOCK 4 — 5–6 hrs</div><div class="step-label">LG / LLG / LL faults + open conductor</div><div class="step-body">Draw one sequence-network connection chart first (LG: series; LLG: parallel; LL: no zero sequence). Learn the derivation for LG, LLG, LL. Practise 2 fault numericals. Open conductor = series fault.</div></div>
+        <div class="step-item"><div class="step-num">BLOCK 5 — 4–5 hrs</div><div class="step-label">Bus types + rectangular equations + Gauss-Seidel</div><div class="step-body">Slack bus: |V|,δ specified. PV/generator: P & |V|. PQ/load: P & Q. Power flow equations in rectangular form. G-S algorithm for PQ and PV buses. Practise the α=1.6 one-iteration numerical.</div></div>
+        <div class="step-item"><div class="step-num">BLOCK 6 — 3–4 hrs</div><div class="step-label">Swing equation + EAC + CB selection/SC KVA</div><div class="step-body">Swing equation derivation. EAC: state, assumptions, derive, applications. CB: SC MVA = √3 × pre-fault kV × SC kA.</div></div>
+        <div class="step-item"><div class="step-num">HIGH TIER — 2 blocks</div><div class="step-label">Transients on line + reactor SC control + Newton-Raphson + LL through Zf</div><div class="step-body">Add after all MUST DO blocks are solid. These appear in 2–3/6 papers and provide the safety margin.</div></div>
+        <div class="step-item"><div class="step-num">FINAL</div><div class="step-label">MCQ checklist ×3 → Apr 2026 timed → Mar 2025 timed</div><div class="step-body">For M25 and A26: write the full sentence when selecting MCQs, not just the letter — the instructions require it.</div></div>
+      </div>
+    </div>
+  </div>
+
+  <div id="psa-repeated" class="tab-pane">
+    <div class="section">
+      <div class="section-title">Repeated questions</div>
+      <div class="tbl-wrap"><table>
+        <thead><tr><th>Topic</th><th>Unit</th><th>Freq</th><th>Marks</th><th>Years</th><th>Priority</th></tr></thead>
+        <tbody>
+          <tr><td>Reactance diagram / SLD numerical</td><td>1</td><td>6/6</td><td>4–6</td><td>All</td><td><span class="pill must">MUST DO</span></td></tr>
+          <tr><td>Y-bus (inspection / singular / direct) + 4-bus numerical</td><td>1</td><td>6/6</td><td>4–6</td><td>All</td><td><span class="pill must">MUST DO</span></td></tr>
+          <tr><td>PU system: definition, merits, transformer/line representation</td><td>1</td><td>5/6</td><td>4</td><td>O22, M23, O23, M25, A26</td><td><span class="pill must">MUST DO</span></td></tr>
+          <tr><td>CB selection / SC KVA derivation</td><td>2</td><td>4/6</td><td>4</td><td>M23, O23, M25, A26</td><td><span class="pill must">MUST DO</span></td></tr>
+          <tr><td>Symmetrical components: explain / derive</td><td>3</td><td>5/6</td><td>4–6</td><td>O22, M23, O23, M25, A26</td><td><span class="pill must">MUST DO</span></td></tr>
+          <tr><td>Sequence-component numericals</td><td>3</td><td>4/6</td><td>4–6</td><td>M23, O23, M24, A26</td><td><span class="pill must">MUST DO</span></td></tr>
+          <tr><td>LG fault (derive + sequence network + numerical)</td><td>4</td><td>6/6</td><td>4–6</td><td>All</td><td><span class="pill must">MUST DO</span></td></tr>
+          <tr><td>LLG fault with and without Zf</td><td>4</td><td>4/6</td><td>4–8</td><td>O22, M23, O23, M24</td><td><span class="pill must">MUST DO</span></td></tr>
+          <tr><td>Open-conductor faults</td><td>4</td><td>4/6</td><td>4</td><td>O22, M23, O23, M25</td><td><span class="pill must">MUST DO</span></td></tr>
+          <tr><td>Bus classification</td><td>5</td><td>4/6</td><td>4</td><td>M23, O23, M25, A26</td><td><span class="pill must">MUST DO</span></td></tr>
+          <tr><td>Power-flow equations in rectangular form</td><td>5</td><td>5/6</td><td>4</td><td>M23, O23, M24, M25, A26</td><td><span class="pill must">MUST DO</span></td></tr>
+          <tr><td>Gauss-Seidel (derive + 1-iteration numerical)</td><td>5</td><td>4/6</td><td>6–8</td><td>O22, M23, O23, M25</td><td><span class="pill must">MUST DO</span></td></tr>
+          <tr><td>Swing equation / rotor dynamics</td><td>6</td><td>4/6</td><td>4–6</td><td>M23, O23, M25, A26</td><td><span class="pill must">MUST DO</span></td></tr>
+          <tr><td>EAC: state, assumptions, derive, applications</td><td>6</td><td>4/6</td><td>4–6</td><td>M23, O23, M25, A26</td><td><span class="pill must">MUST DO</span></td></tr>
+          <tr><td>LL fault (± fault impedance)</td><td>4</td><td>2/6</td><td>4–8</td><td>O22, M24</td><td><span class="pill high">HIGH</span></td></tr>
+          <tr><td>SC current control (reactor methods, 2 types)</td><td>2</td><td>2/6</td><td>4–6</td><td>M25, A26</td><td><span class="pill high">HIGH</span></td></tr>
+          <tr><td>Transients on line / SC of alternator on no-load</td><td>2</td><td>3/6</td><td>4</td><td>M23, O23, M24</td><td><span class="pill high">HIGH</span></td></tr>
+          <tr><td>Newton-Raphson derivation</td><td>5</td><td>2/6</td><td>6</td><td>O22, M24</td><td><span class="pill high">HIGH</span></td></tr>
+          <tr><td>Improving TS / types of stability / swing curve + CCT</td><td>6</td><td>3/6</td><td>4</td><td>O22, M24, A26</td><td><span class="pill high">HIGH</span></td></tr>
+          <tr><td>Z-bus building; complex power in sequence components</td><td>1, 3</td><td>1/6 each</td><td>4–8</td><td>M24</td><td><span class="pill med">MEDIUM</span></td></tr>
+        </tbody>
+      </table></div>
+      <div class="callout"><b>Exact repeats to know:</b> 25 MVA/13.8 kV reactance diagram (M23, O23, A26). 300 MVA SLD data (M25, A26). LLG at generator X=j0.35/j0.25/j0.20 (M23, O23). Unbalanced currents 10+j20, 12−j10, −3−j5 (M23, O23).</div>
+    </div>
+  </div>
+
+  <div id="psa-top20" class="tab-pane">
+    <div class="section">
+      <div class="section-title">Top 20</div>
+      <div class="top20">
+        <div class="top20-item"><span class="top20-num">1</span>Reactance diagram / single-line diagram numerical</div>
+        <div class="top20-item"><span class="top20-num">2</span>PU system: definition, merits/demerits, base change, transformer PU</div>
+        <div class="top20-item"><span class="top20-num">3</span>Y-bus: inspection + singular transformation + 4-bus numerical</div>
+        <div class="top20-item"><span class="top20-num">4</span>Symmetrical components derivation</div>
+        <div class="top20-item"><span class="top20-num">5</span>Sequence-component numericals</div>
+        <div class="top20-item"><span class="top20-num">6</span>LG fault: derivation, sequence network, numerical</div>
+        <div class="top20-item"><span class="top20-num">7</span>LLG fault with and without Zf</div>
+        <div class="top20-item"><span class="top20-num">8</span>LL fault with and without Zf</div>
+        <div class="top20-item"><span class="top20-num">9</span>Fault-current numericals: limit current / terminal fault</div>
+        <div class="top20-item"><span class="top20-num">10</span>Open-conductor faults with sequence networks</div>
+        <div class="top20-item"><span class="top20-num">11</span>Gauss-Seidel: derivation, algorithm for PQ/PV buses, numerical</div>
+        <div class="top20-item"><span class="top20-num">12</span>Power-flow equations in rectangular form</div>
+        <div class="top20-item"><span class="top20-num">13</span>Types of buses (slack, PV, PQ) and their significance</div>
+        <div class="top20-item"><span class="top20-num">14</span>Newton-Raphson method derivation</div>
+        <div class="top20-item"><span class="top20-num">15</span>Swing equation and rotor dynamics</div>
+        <div class="top20-item"><span class="top20-num">16</span>EAC: statement, assumptions, derivation, applications</div>
+        <div class="top20-item"><span class="top20-num">17</span>CB selection + SC KVA derivation</div>
+        <div class="top20-item"><span class="top20-num">18</span>Reactor control of SC current (2 methods, merits/demerits)</div>
+        <div class="top20-item"><span class="top20-num">19</span>Transients on a line / SC of alternator on no-load</div>
+        <div class="top20-item"><span class="top20-num">20</span>Improving TS + types of stability + swing curve / CCT</div>
+      </div>
+    </div>
+  </div>
+
+  <div id="psa-mcq" class="tab-pane">
+    <div class="section">
+      <div class="section-title">14/14 MCQ checklist</div>
+      <div class="callout"><b>Note:</b> M25 and A26 require you to write the full sentence, not just the letter. Practise writing the complete sentence.</div>
+      <div class="mcq-grid">
+        <div class="mcq-item"><strong>PU base change</strong><span>Z_pu,new = Z_pu,old × (kV_old/kV_new)² × (MVA_new/MVA_old). E.g. 0.9 pu, 25 MVA 33 kV → 50 MVA 11 kV = 16.2.</span></div>
+        <div class="mcq-item"><strong>Base impedance</strong><span>Z_base = kV²/MVA. 10 kV, 10 MVA → 10 Ω. 0.31 pu, 100 MVA 220 kV → j150 Ω.</span></div>
+        <div class="mcq-item"><strong>% reactance</strong><span>%X = pu × 100. 100 kVA, 5 kV, 5 Ω → 2%. PU impedance is same on HT and LT sides.</span></div>
+        <div class="mcq-item"><strong>SC MVA (transformer)</strong><span>SC MVA = rating / X_pu. 500 kVA, 5% reactance → 10 MVA.</span></div>
+        <div class="mcq-item"><strong>CB MVA formula</strong><span>CB MVA = √3 × pre-fault kV × SC kA. (NOT post-fault.)</span></div>
+        <div class="mcq-item"><strong>Fault current factors</strong><span>Depends on total impedance up to fault AND voltage at fault point. Fault level = fault MVA.</span></div>
+        <div class="mcq-item"><strong>Reactance order</strong><span>X_leakage < X″ (sub-transient) < X′ (transient) < X_sync. DC offset = unidirectional component.</span></div>
+        <div class="mcq-item"><strong>Reactance diagram</strong><span>Used for fault analysis (no resistances). Impedance diagram used for load flow studies.</span></div>
+        <div class="mcq-item"><strong>a-operator</strong><span>1 + a + a² = 0. I₀ = (Ia+Ib+Ic)/3. E.g. 4+j6, 2−j2, −3+j2 → I₀=1+j2.</span></div>
+        <div class="mcq-item"><strong>Sequence networks</strong><span>Balanced system → positive sequence only. No neutral → I₀=0. Emf in positive-sequence network only.</span></div>
+        <div class="mcq-item"><strong>LG fault</strong><span>Three networks in series. Ia1=Ia2=Ia0. Ungrounded neutral → Z₀=∞ → fault current=0.</span></div>
+        <div class="mcq-item"><strong>LL fault</strong><span>No zero-sequence network. I₀=0. Ia1=−Ia2.</span></div>
+        <div class="mcq-item"><strong>LLG fault</strong><span>Zero and negative networks in parallel. Open conductor = series fault.</span></div>
+        <div class="mcq-item"><strong>Y-bus facts</strong><span>Size: n×n. Off-diagonal = mutual/transfer admittance. Diagonal = self/driving-point admittance.</span></div>
+        <div class="mcq-item"><strong>Bus types</strong><span>Slack=swing: |V|,δ. PV=generator: P & |V|. PQ=load bus: P & Q. Load bus is most common.</span></div>
+        <div class="mcq-item"><strong>EAC</strong><span>Used for stability analysis. Assumptions: resistance neglected, constant speed, constant Pm → "all of these". Max power at δ=90°.</span></div>
+        <div class="mcq-item"><strong>KE stored</strong><span>KE = H × S. 4 × 20 MVA = 80 MJ.</span></div>
+        <div class="mcq-item"><strong>Swing curve</strong><span>δ vs t. If δ keeps increasing → unstable. Series capacitor improves transient stability.</span></div>
+      </div>
+    </div>
+  </div>
+
+  <div id="psa-predict" class="tab-pane">
+    <div class="section">
+      <div class="section-title">Oct/Nov 2026 prediction</div>
+      <div class="tbl-wrap"><table>
+        <thead><tr><th>Marks</th><th>Likely topic</th><th>Confidence</th></tr></thead>
+        <tbody>
+          <tr><td>6 mk</td><td>Reactance diagram numerical</td><td class="conf-h">High</td></tr>
+          <tr><td>6 mk</td><td>Symmetrical components derivation</td><td class="conf-h">High</td></tr>
+          <tr><td>6 mk</td><td>EAC (state, derive, applications)</td><td class="conf-h">High</td></tr>
+          <tr><td>6 mk</td><td>LG derivation or another fault in the LG/LLG/LL family</td><td class="conf-h">High (family); Med (any one)</td></tr>
+          <tr><td>6 mk</td><td>Sequence-component numerical</td><td class="conf-m">Medium-High</td></tr>
+          <tr><td>6 mk</td><td>Gauss-Seidel (absent in M24 and A26 — due for return)</td><td class="conf-m">Medium-High</td></tr>
+          <tr><td>6 mk</td><td>LLG/LL through Zf or fault-current numerical</td><td class="conf-m">Medium</td></tr>
+          <tr><td>4 mk</td><td>PU theory, Y-bus method, CB selection/SC KVA, bus types, rectangular power flow, swing equation</td><td class="conf-h">High</td></tr>
+          <tr><td>4 mk</td><td>SLD drawing, open conductor, improving TS</td><td class="conf-m">Medium-High</td></tr>
+          <tr><td>MCQ</td><td>PU base change, SC MVA/CB formula, a-operator, bus specs, sequence-network facts, EAC/stability</td><td class="conf-h">High</td></tr>
+        </tbody>
+      </table></div>
+    </div>
+  </div>
+</main>
+</div>
+
+<!-- ══════════════════════════════════════════════════ HEV PAGE ═══ -->
+<div id="hev" class="page">
+<main>
+  <button class="back-btn" onclick="showPage('home')">← All subjects</button>
+  <div class="subj-header">
+    <div class="subj-code">EEPEC-01C · T.Y. B.Tech Electrical · Semester I</div>
+    <div class="subj-title">Hybrid Electrical Vehicle Design</div>
+    <div class="subj-meta">
+      <span>📋 70 marks (14 MCQ + 56 written)</span>
+      <span>📚 5 papers analysed (Oct 2022 → Apr 2026)</span>
+      <span>🎯 Target: 65+/70</span>
+    </div>
+  </div>
+
+  <div class="callout"><b>Important context:</b> Only the Apr 2026 paper (M26) follows the current 6-unit syllabus. Earlier papers used an older format. M26 is your primary template. The "regression method" MCQ appeared in 3 papers — always the wrong answer for EMS strategies.</div>
+
+  <div class="tab-row">
+    <button class="tab-btn active" onclick="showTab('hev','roi')">ROI & Roadmap</button>
+    <button class="tab-btn" onclick="showTab('hev','repeated')">Repeated Questions</button>
+    <button class="tab-btn" onclick="showTab('hev','top20')">Top 20</button>
+    <button class="tab-btn" onclick="showTab('hev','mcq')">MCQ Checklist</button>
+    <button class="tab-btn" onclick="showTab('hev','predict')">2026 Prediction</button>
+  </div>
+
+  <div id="hev-roi" class="tab-pane active">
+    <div class="section">
+      <div class="section-title">Unit priority</div>
+      <div class="tbl-wrap"><table>
+        <thead><tr><th>Unit</th><th>Key topics</th><th>Freq</th><th>Written marks (M26)</th><th>Priority</th></tr></thead>
+        <tbody>
+          <tr><td>1 — Introduction: Electric Vehicle</td><td>EV vs ICE, components, classification, history</td><td>4/5</td><td>~24</td><td><span class="pill must">MUST DO</span></td></tr>
+          <tr><td>2 — Motor Torque Calculations</td><td>Rolling, grade, acceleration, tractive effort, wheel torque</td><td>3/5</td><td>~10</td><td><span class="pill must">MUST DO</span></td></tr>
+          <tr><td>3 — EV Architecture Design</td><td>BEV/HEV/PHEV/FCEV types, solar PV EV, fuel cell EV</td><td>4/5</td><td>~8</td><td><span class="pill high">HIGH</span></td></tr>
+          <tr><td>4 — Electric Drive and Controller</td><td>Motor types, selection, sizing, controller, drive control</td><td>4/5</td><td>~18</td><td><span class="pill must">MUST DO</span></td></tr>
+          <tr><td>5 — Energy Storage Solutions</td><td>Lead-acid, NiMH, Li-ion (reactions), pack configuration, selection</td><td>2/5 (batteries); 5/5 (storage)</td><td>~14</td><td><span class="pill must">MUST DO</span></td></tr>
+          <tr><td>6 — BMS / EMS</td><td>BMS need + block diagram + cell balancing; EMS strategies</td><td>5/5</td><td>~10</td><td><span class="pill must">MUST DO</span></td></tr>
+        </tbody>
+      </table></div>
+    </div>
+    <div class="section">
+      <div class="section-title">Study roadmap (4 phases)</div>
+      <div class="steps">
+        <div class="step-item">
+          <div class="step-num">PHASE 1 — Units 1, 3: Foundation</div>
+          <div class="step-label">EV architecture → EV vs ICE → classification → history</div>
+          <div class="step-body">Step 1: Draw EV block diagram and name every component's job. Step 2: EV vs ICE two-column table (powertrain, efficiency, emissions, noise, benefits, challenges, social impact). Step 3: Classification table — micro/mild/full hybrid, BEV/HEV/PHEV/FCEV, series/parallel/split — with one example each. Step 4: 5–6 history milestones.</div>
+          <div class="step-marks">Done when: draw block diagram in 3 min without notes; fill classification table blind.</div>
+        </div>
+        <div class="step-item">
+          <div class="step-num">PHASE 2 — Units 2, 4: Drive-train and motors</div>
+          <div class="step-label">Tractive effort numericals → motor types → selection → controller</div>
+          <div class="step-body">Step 5: Rolling → grade → acceleration → aero drag → total tractive effort → wheel torque. Memorise 4 formulas and do 2 solved numericals. Step 6: Motor types table (DC series, induction, PMSM, BLDC, SRM) + torque-speed curve + requirements and selection factors + controller components + DC/induction drive control (scalar, vector, DTC).</div>
+          <div class="step-marks">Done when: write a 6-marker on any one motor from memory.</div>
+        </div>
+        <div class="step-item">
+          <div class="step-num">PHASE 3 — Units 5, 6: Energy core</div>
+          <div class="step-label">Battery reactions → pack design → BMS → EMS</div>
+          <div class="step-body">Step 7: Battery basics (cell, Ah, series vs parallel, SOC) → reactions for lead-acid, NiMH, Li-ion (charging and discharging both) → pack configuration + selection criteria. Step 8: BMS — need, functions, cell balancing, block diagram → supervisory control → EMS strategies (rule-based vs optimization-based, classify and compare).</div>
+          <div class="step-marks">Done when: write all three charge/discharge reaction sets from memory.</div>
+        </div>
+        <div class="step-item">
+          <div class="step-num">PHASE 4 — Unit 3 + Tier B extras</div>
+          <div class="step-label">Solar PV → fuel cell → regen braking → flywheel/supercapacitor → AI in EV</div>
+          <div class="step-body">One page each on solar PV EV and fuel cell (working + limitations). Short note on regen braking and ABS. MCQ-level facts on flywheel and supercapacitor. AI in EV and protection = one page (syllabus-listed, never asked yet).</div>
+        </div>
+        <div class="step-item">
+          <div class="step-num">FINAL REVISION</div>
+          <div class="step-label">MCQ checklist → redraw all diagrams + reactions → timed M26 paper</div>
+          <div class="step-body">30 min MCQs first, then written section. Fix only gaps revealed by the paper. Don't start new topics.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="hev-repeated" class="tab-pane">
+    <div class="section">
+      <div class="section-title">Repeated questions</div>
+      <div class="tbl-wrap"><table>
+        <thead><tr><th>Topic</th><th>Freq</th><th>Marks</th><th>Years</th><th>Priority</th></tr></thead>
+        <tbody>
+          <tr><td>Types of motors in EV/HEV + selection/sizing + requirements + torque-speed envelope</td><td>4/5, 8 Qs</td><td>4–8</td><td>O22, O23, M24, M26</td><td><span class="pill must">MUST DO</span></td></tr>
+          <tr><td>Motor drive configuration/control + controller components</td><td>3/5</td><td>4–8</td><td>O23, M24, M26</td><td><span class="pill must">MUST DO</span></td></tr>
+          <tr><td>Energy management strategies: need, classification, comparison</td><td>4/5</td><td>4–8</td><td>O22, M23, O23, M24</td><td><span class="pill must">MUST DO</span></td></tr>
+          <tr><td>BMS: need, block diagram, supervisory control</td><td>2/5</td><td>4, 4, 6</td><td>O22, M26</td><td><span class="pill must">MUST DO</span></td></tr>
+          <tr><td>Battery chemistry with reactions (lead-acid, NiMH, Li-ion)</td><td>2/5</td><td>4–8</td><td>M23, M26</td><td><span class="pill must">MUST DO</span></td></tr>
+          <tr><td>Tractive effort, rolling resistance, vehicle performance</td><td>3/5</td><td>4–8</td><td>O22, O23, M26</td><td><span class="pill must">MUST DO</span></td></tr>
+          <tr><td>EV/HEV components and architecture</td><td>3/5</td><td>4–8</td><td>O22, M23, M26</td><td><span class="pill must">MUST DO</span></td></tr>
+          <tr><td>EV vs ICE / benefits / social & environmental importance</td><td>3/5</td><td>4–8</td><td>O22, M24, M26</td><td><span class="pill must">MUST DO</span></td></tr>
+          <tr><td>Classification and electrification levels</td><td>2/5 + MCQs</td><td>6</td><td>O22 (MCQ), M26</td><td><span class="pill must">MUST DO</span></td></tr>
+          <tr><td>Brake systems / regenerative braking / braking power front & rear</td><td>4/5</td><td>6–8</td><td>O22, M23, O23, M24</td><td><span class="pill high">HIGH</span></td></tr>
+          <tr><td>Fuel cell working and limitations</td><td>2/5</td><td>6–8</td><td>O22, O23</td><td><span class="pill high">HIGH</span></td></tr>
+          <tr><td>History of EVs</td><td>2/5</td><td>4</td><td>O22, M26</td><td><span class="pill high">HIGH</span></td></tr>
+          <tr><td>Solar PV EV system and advantages</td><td>1/5, 2 Qs</td><td>4, 4</td><td>M26</td><td><span class="pill high">HIGH</span></td></tr>
+          <tr><td>Flywheel and supercapacitor</td><td>2/5</td><td>6–8</td><td>O22, M24</td><td><span class="pill med">MEDIUM</span></td></tr>
+        </tbody>
+      </table></div>
+    </div>
+  </div>
+
+  <div id="hev-top20" class="tab-pane">
+    <div class="section">
+      <div class="section-title">Top 20</div>
+      <div class="top20">
+        <div class="top20-item"><span class="top20-num">1</span>Motor types and selection/sizing factors (table + torque-speed curve)</div>
+        <div class="top20-item"><span class="top20-num">2</span>Motor requirements and desired features for EV</div>
+        <div class="top20-item"><span class="top20-num">3</span>Motor controller components; DC and induction drive control (scalar, vector, DTC)</div>
+        <div class="top20-item"><span class="top20-num">4</span>Li-ion charging and discharging reactions</div>
+        <div class="top20-item"><span class="top20-num">5</span>Lead-acid discharging and charging reactions</div>
+        <div class="top20-item"><span class="top20-num">6</span>NiMH charging and discharging reactions</div>
+        <div class="top20-item"><span class="top20-num">7</span>BMS: need, functions, block diagram, cell balancing</div>
+        <div class="top20-item"><span class="top20-num">8</span>Software-based high-level supervisory control (block diagram)</div>
+        <div class="top20-item"><span class="top20-num">9</span>EMS: rule-based vs optimization-based (classify and compare)</div>
+        <div class="top20-item"><span class="top20-num">10</span>Tractive effort and torque with a solved example</div>
+        <div class="top20-item"><span class="top20-num">11</span>Rolling, grade, acceleration, aero drag — all four forces</div>
+        <div class="top20-item"><span class="top20-num">12</span>EV architecture diagram and components</div>
+        <div class="top20-item"><span class="top20-num">13</span>EV vs ICE: powertrain, efficiency, emissions, benefits, challenges, social and environmental importance</div>
+        <div class="top20-item"><span class="top20-num">14</span>Classification and electrification levels with examples</div>
+        <div class="top20-item"><span class="top20-num">15</span>BEV, HEV, PHEV, FCEV types and series/parallel/split architectures</div>
+        <div class="top20-item"><span class="top20-num">16</span>Solar PV EV system and advantages</div>
+        <div class="top20-item"><span class="top20-num">17</span>Fuel cell EV: working, hydrogen, limitations</div>
+        <div class="top20-item"><span class="top20-num">18</span>Regenerative braking and brake systems (ABS)</div>
+        <div class="top20-item"><span class="top20-num">19</span>Battery pack configuration, sizing and selection criteria</div>
+        <div class="top20-item"><span class="top20-num">20</span>History of EVs (5–6 milestones)</div>
+      </div>
+    </div>
+  </div>
+
+  <div id="hev-mcq" class="tab-pane">
+    <div class="section">
+      <div class="section-title">14/14 MCQ checklist</div>
+      <div class="mcq-grid">
+        <div class="mcq-item"><strong>EV components</strong><span>Battery, electric motor, motor controller. Radiator is NOT an EV component.</span></div>
+        <div class="mcq-item"><strong>EV torque</strong><span>Maximum torque at low RPM (not high).</span></div>
+        <div class="mcq-item"><strong>Air drag</strong><span>Increases with speed² (F_aero = ½·ρ·Cd·A·v²).</span></div>
+        <div class="mcq-item"><strong>Tractive effort</strong><span>Force at the wheels to move the vehicle.</span></div>
+        <div class="mcq-item"><strong>FCEV fuel</strong><span>Uses hydrogen.</span></div>
+        <div class="mcq-item"><strong>PHEV charging</strong><span>Can be charged by plug-in charger, regen braking AND on-board engine → all of the above.</span></div>
+        <div class="mcq-item"><strong>Motor Generator in hybrid</strong><span>Generates electricity, starts vehicle, assists engine during acceleration → all of the above.</span></div>
+        <div class="mcq-item"><strong>Best EV motor</strong><span>PMSM — favoured for high efficiency and power density.</span></div>
+        <div class="mcq-item"><strong>Li-ion electrolyte</strong><span>Lithium-based gel.</span></div>
+        <div class="mcq-item"><strong>Parallel cells</strong><span>Increases current capacity. Series increases voltage.</span></div>
+        <div class="mcq-item"><strong>BMS prevents</strong><span>Overcharging and undercharging of individual cells.</span></div>
+        <div class="mcq-item"><strong>Cell balancing</strong><span>Ensures each cell contributes equally to capacity and lifespan.</span></div>
+        <div class="mcq-item"><strong>Lead-acid positive plate after discharge</strong><span>Lead sulphate (PbSO₄).</span></div>
+        <div class="mcq-item"><strong>EMS strategy NOT used</strong><span>Regression method. Used: rule-based, optimization-based, global optimization.</span></div>
+        <div class="mcq-item"><strong>Regenerative braking</strong><span>Captures kinetic energy from braking and converts it to electricity to charge the HV battery.</span></div>
+        <div class="mcq-item"><strong>Flywheel stores energy</strong><span>In mechanical form.</span></div>
+        <div class="mcq-item"><strong>Fuel cell converts</strong><span>Fuel energy directly to electrical energy.</span></div>
+        <div class="mcq-item"><strong>ABS</strong><span>Prevents uncontrolled skidding during sudden braking.</span></div>
+        <div class="mcq-item"><strong>DC series motor</strong><span>Suitable for high starting torque.</span></div>
+        <div class="mcq-item"><strong>Motor ideal for vehicles</strong><span>Because of the torque-speed characteristics.</span></div>
+      </div>
+      <div class="callout" style="margin-top:16px"><b>Battery reaction cheat sheet (verify with class notes):</b> Lead-acid overall: Pb + PbO₂ + 2H₂SO₄ ⇄ 2PbSO₄ + 2H₂O (discharge →, charge ←). NiMH positive: Ni(OH)₂ + OH⁻ ⇄ NiOOH + H₂O + e⁻ (→ charging). Li-ion cathode: LiCoO₂ ⇄ Li₁₋ₓCoO₂ + xLi⁺ + xe⁻ (→ charging). Anode: C + xLi⁺ + xe⁻ ⇄ LiₓC (→ charging).</div>
+    </div>
+  </div>
+
+  <div id="hev-predict" class="tab-pane">
+    <div class="section">
+      <div class="section-title">Oct/Nov 2026 prediction</div>
+      <div class="callout"><b>Caveat:</b> Only one paper (M26) exists under the current syllabus. A new setter could shift emphasis — which is why the HIGH tier matters.</div>
+      <div class="tbl-wrap"><table>
+        <thead><tr><th>Area</th><th>Likely question</th><th>Confidence</th></tr></thead>
+        <tbody>
+          <tr><td>Format</td><td>14 MCQ + Q2 (4 of 6, 16 mk) + Q3 (2 of 3, 12 mk) + Q4 (4 of 6, 16 mk) + Q5 (2 of 3, 12 mk)</td><td class="conf-h">High</td></tr>
+          <tr><td>6-mark Section I</td><td>Types/architecture of BEV, HEV, PHEV, FCEV</td><td class="conf-h">High</td></tr>
+          <tr><td>6-mark Section I</td><td>Tractive effort and torque numerical (extended to grade and acceleration)</td><td class="conf-m">Med-High</td></tr>
+          <tr><td>4-mark Section I</td><td>EV vs ICE benefits and challenges</td><td class="conf-h">High</td></tr>
+          <tr><td>4-mark Section I</td><td>Rolling resistance definition and effect; solar EV</td><td class="conf-m">Medium</td></tr>
+          <tr><td>6-mark Section II</td><td>Battery chemistry or pack design (Li-ion or pack configuration)</td><td class="conf-h">High</td></tr>
+          <tr><td>6-mark Section II</td><td>Motor selection or types with characteristics</td><td class="conf-h">High</td></tr>
+          <tr><td>6-mark Section II</td><td>Supervisory control OR rule-based vs optimization-based EMS</td><td class="conf-h">High</td></tr>
+          <tr><td>4-mark Section II</td><td>Controller components; motor sizing (rpm and torque)</td><td class="conf-m">Medium</td></tr>
+          <tr><td>4-mark Section II</td><td>Lead-acid charging OR NiMH discharging (M26 asked opposite halves)</td><td class="conf-m">Medium</td></tr>
+          <tr><td>4-mark Section II</td><td>Need and functions of BMS; battery selection criteria</td><td class="conf-m">Medium</td></tr>
+          <tr><td>MCQ</td><td>Motor torque-speed, DC series, battery basics, BMS functions, EV components, tractive effort, PHEV/FCEV facts</td><td class="conf-h">High</td></tr>
+          <tr><td>MCQ</td><td>Recycled: regression method, flywheel, fuel cell, ABS, regen braking</td><td class="conf-m">Medium</td></tr>
+        </tbody>
+      </table></div>
+    </div>
+  </div>
+</main>
+</div>
+
+<script>
+function showPage(id) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  document.querySelectorAll('.nav-btn').forEach(b => {
+    b.classList.toggle('active', b.textContent.toLowerCase().includes(id === 'home' ? 'home' : id));
+  });
+  window.scrollTo(0, 0);
+}
+
+function showTab(subject, tab) {
+  const panes = document.querySelectorAll('#' + subject + ' .tab-pane');
+  panes.forEach(p => p.classList.remove('active'));
+  const target = document.getElementById(subject + '-' + tab);
+  if (target) target.classList.add('active');
+  const btns = document.querySelectorAll('#' + subject + ' .tab-btn');
+  btns.forEach(b => b.classList.remove('active'));
+  event.target.classList.add('active');
+}
+
+function toggleDark() {
+  const root = document.documentElement;
+  const isDark = root.getAttribute('data-theme') === 'dark';
+  root.setAttribute('data-theme', isDark ? 'light' : 'dark');
+  document.querySelector('.dark-toggle').textContent = isDark ? '☾ Dark' : '☀ Light';
+}
+</script>
+</body>
+</html>
