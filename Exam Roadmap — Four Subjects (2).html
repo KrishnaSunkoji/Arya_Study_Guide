@@ -1,0 +1,1346 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Exam Roadmap — Four Subjects</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,500&family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#E7F0F8;
+    --paper-grid:#CFE0EE;
+    --card:#FAFDFF;
+    --ink:#101C2B;
+    --ink-soft:#4C5E72;
+    --ink-faint:#7D90A3;
+    --line:#C2D4E6;
+    --navy:#081A2E;
+    --navy-soft:#0F2A46;
+
+    --must:#A8362E;
+    --must-bg:#F7E6E3;
+    --high:#B8762B;
+    --high-bg:#F6ECDA;
+    --med:#2878A8;
+    --med-bg:#DCEBF4;
+    --low:#5E6B78;
+    --low-bg:#E2E8EE;
+
+    --radius-s:3px;
+    --radius-m:6px;
+
+    color-scheme: light;
+  }
+  :root{ box-sizing:border-box; padding-top:env(safe-area-inset-top,0px); padding-bottom:env(safe-area-inset-bottom,0px); }
+  html{ scroll-padding-top:86px; }
+  *{box-sizing:border-box;}
+  html,body{height:100%;}
+  body{
+    margin:0;
+    background:
+      linear-gradient(var(--paper-grid) 1px, transparent 1px) 0 0/100% 34px,
+      linear-gradient(90deg, var(--paper-grid) 1px, transparent 1px) 0 0/34px 100%,
+      var(--paper);
+    background-attachment:local;
+    color:var(--ink);
+    font-family:'Inter', -apple-system, sans-serif;
+    -webkit-font-smoothing:antialiased;
+    font-size:15.5px;
+    line-height:1.55;
+  }
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      --paper:#0A1626;
+      --paper-grid:#122234;
+      --card:#0F2036;
+      --ink:#E4ECF6;
+      --ink-soft:#9FB1C6;
+      --ink-faint:#6D8097;
+      --line:#20334C;
+      --navy:#050E1A;
+      --navy-soft:#0A1C30;
+      --must-bg:#3A201D;
+      --high-bg:#392D1B;
+      --med-bg:#132A3B;
+      --low-bg:#1C2530;
+    }
+  }
+  :root[data-theme="dark"]{
+    --paper:#0A1626; --paper-grid:#122234; --card:#0F2036; --ink:#E4ECF6;
+    --ink-soft:#9FB1C6; --ink-faint:#6D8097; --line:#20334C; --navy:#050E1A; --navy-soft:#0A1C30;
+    --must-bg:#3A201D; --high-bg:#392D1B; --med-bg:#132A3B; --low-bg:#1C2530;
+  }
+
+  h1,h2,h3,h4{ font-family:'Fraunces', Georgia, serif; font-weight:600; margin:0; color:var(--ink); }
+  .mono{ font-family:'JetBrains Mono', monospace; }
+  a{ color:inherit; }
+  ::selection{ background: color-mix(in srgb, var(--accent, #1C86B4) 30%, transparent); }
+  :focus-visible{ outline:2px solid var(--accent, #1C86B4); outline-offset:2px; border-radius:3px; }
+
+  /* ---------- header ---------- */
+  header.topbar{
+    position:sticky; top:0; z-index:40;
+    background:var(--navy);
+    padding:env(safe-area-inset-top,0px) 0 0 0;
+    border-bottom:1px solid #000;
+  }
+  .topbar-inner{
+    max-width:1180px; margin:0 auto; padding:14px 22px 0;
+    display:flex; align-items:center; gap:22px; flex-wrap:wrap;
+  }
+  .brand{
+    display:flex; align-items:baseline; gap:9px; margin-right:auto;
+    color:#F3F1EA;
+  }
+  .brand .mark{
+    width:9px; height:9px; border-radius:1px;
+    background:var(--accent, #1C86B4);
+    display:inline-block; transform:rotate(45deg);
+    flex:none;
+  }
+  .brand .t1{ font-family:'Fraunces', serif; font-weight:600; font-size:17px; letter-spacing:.2px; }
+  .brand .t2{ font-size:11.5px; color:#9CA39B; font-family:'JetBrains Mono',monospace; }
+
+  .tabs{ display:flex; gap:2px; }
+  .tab{
+    appearance:none; border:none; background:transparent; cursor:pointer;
+    color:#B8BDB3; font-family:'Inter',sans-serif; font-weight:600; font-size:13.5px;
+    padding:10px 15px 12px; border-radius:7px 7px 0 0; position:relative;
+    transition:color .15s ease, background .15s ease;
+    white-space:nowrap;
+  }
+  .tab .dot{ display:inline-block; width:6px; height:6px; border-radius:50%; margin-right:7px; background:#5a7085; vertical-align:middle; }
+  .tab:hover{ color:#EDF3F8; }
+  .tab.active{ color:var(--ink); background:var(--card); }
+  .tab.active .dot{ background:var(--accent); }
+
+  .tabs-scroll{ overflow-x:auto; -ms-overflow-style:none; scrollbar-width:none; position:relative; }
+  .tabs-scroll::-webkit-scrollbar{ display:none; }
+  .tabs-scroll{ -webkit-mask-image:linear-gradient(to right, transparent 0, #000 14px, #000 calc(100% - 14px), transparent 100%); mask-image:linear-gradient(to right, transparent 0, #000 14px, #000 calc(100% - 14px), transparent 100%); }
+
+  .theme-toggle{
+    appearance:none; border:1px solid #2A3B52; background:var(--navy-soft); color:#CBD6E3;
+    cursor:pointer; border-radius:20px; padding:6px 12px 6px 10px; font-family:'Inter',sans-serif;
+    font-size:12px; font-weight:600; display:flex; align-items:center; gap:7px; flex:none;
+    transition:border-color .15s ease, color .15s ease;
+  }
+  .theme-toggle:hover{ color:#fff; border-color:#3C526F; }
+  .theme-toggle svg{ width:14px; height:14px; flex:none; }
+
+  /* ---------- layout ---------- */
+  .page{ max-width:1180px; margin:0 auto; padding:0 22px 90px; }
+  .layout{ display:grid; grid-template-columns:220px 1fr; gap:38px; align-items:start; padding-top:30px; }
+  @media (max-width:860px){ .layout{ grid-template-columns:1fr; } }
+
+  nav.sidenav{ position:sticky; top:78px; display:flex; flex-direction:column; gap:1px; }
+  @media (max-width:860px){
+    nav.sidenav{ position:static; flex-direction:row; overflow-x:auto; gap:6px; padding-bottom:6px; margin-bottom:6px; border-bottom:1px solid var(--line); }
+  }
+  nav.sidenav a{
+    text-decoration:none; color:var(--ink-soft); font-size:13px; font-weight:500;
+    padding:7px 10px; border-left:2px solid transparent; white-space:nowrap;
+  }
+  @media (max-width:860px){ nav.sidenav a{ border-left:none; border-bottom:2px solid transparent; flex:none; } }
+  nav.sidenav a:hover{ color:var(--ink); }
+  nav.sidenav a.current{ color:var(--accent); border-left-color:var(--accent); font-weight:700; }
+  @media (max-width:860px){ nav.sidenav a.current{ border-bottom-color:var(--accent); border-left:none; } }
+
+  /* ---------- hero ---------- */
+  .hero{ padding:8px 0 22px; border-bottom:1px solid var(--line); margin-bottom:30px; }
+  .hero-top{ display:flex; justify-content:space-between; align-items:flex-start; gap:24px; flex-wrap:wrap; }
+  .hero h1{ font-size:clamp(28px,4vw,40px); line-height:1.05; letter-spacing:-.01em; }
+  .hero .code{ font-family:'JetBrains Mono',monospace; font-size:13px; color:var(--accent); margin-top:9px; display:block; letter-spacing:.02em; }
+  .ring-stat{ text-align:right; flex:none; }
+  .ring-stat .pct{ font-family:'Fraunces',serif; font-size:30px; font-weight:600; color:var(--accent); line-height:1; }
+  .ring-stat .lbl{ font-size:11.5px; color:var(--ink-faint); margin-top:3px; }
+  .ring-stat .reset{ appearance:none; border:none; background:none; cursor:pointer; font-size:11px; color:var(--ink-faint); text-decoration:underline; text-underline-offset:2px; padding:5px 0 0; font-family:'Inter',sans-serif; }
+  .ring-stat .reset:hover{ color:var(--accent); }
+  .hero-sub{ color:var(--ink-soft); font-size:14.5px; margin-top:12px; max-width:640px; }
+
+  .caveat{
+    margin-top:18px; padding:14px 16px; background:var(--high-bg); border-left:3px solid var(--high);
+    border-radius:0 var(--radius-m) var(--radius-m) 0; font-size:13.5px; color:var(--ink);
+  }
+  .caveat b{ display:block; font-size:11px; text-transform:uppercase; letter-spacing:.06em; color:var(--high); margin-bottom:5px; font-weight:700;}
+
+  /* ---------- sections ---------- */
+  section.block{ margin-bottom:46px; scroll-margin-top:84px; }
+  .block-head{ display:flex; align-items:baseline; gap:11px; margin-bottom:16px; }
+  .block-head h2{ font-size:21px; }
+  .block-head .idx{ font-family:'JetBrains Mono',monospace; color:var(--ink-faint); font-size:12.5px; }
+  .block-note{ color:var(--ink-soft); font-size:13.5px; margin:-9px 0 16px; max-width:680px; }
+
+  /* priority badge */
+  .pri{ display:inline-flex; align-items:center; gap:5px; font-size:11px; font-weight:700; padding:3px 8px 3px 7px; border-radius:20px; white-space:nowrap; letter-spacing:.01em; }
+  .pri::before{ content:""; width:6px; height:6px; border-radius:50%; flex:none; }
+  .pri.MUST{ color:var(--must); background:var(--must-bg); }
+  .pri.MUST::before{ background:var(--must); }
+  .pri.HIGH{ color:var(--high); background:var(--high-bg); }
+  .pri.HIGH::before{ background:var(--high); }
+  .pri.MEDIUM{ color:var(--med); background:var(--med-bg); }
+  .pri.MEDIUM::before{ background:var(--med); }
+  .pri.LOW{ color:var(--low); background:var(--low-bg); }
+  .pri.LOW::before{ background:var(--low); }
+
+  .legend{ display:flex; gap:14px; flex-wrap:wrap; margin:4px 0 26px; }
+  .legend span.pri{ font-size:10.5px; }
+
+  /* tables */
+  .twrap{ border:1px solid var(--line); border-radius:var(--radius-m); overflow:hidden; background:var(--card); }
+  table{ width:100%; border-collapse:collapse; font-size:13.5px; }
+  thead th{
+    text-align:left; font-family:'Inter',sans-serif; font-weight:600; font-size:11px;
+    color:var(--ink-faint); text-transform:none; padding:10px 14px; border-bottom:1px solid var(--line);
+    background:color-mix(in srgb, var(--accent) 5%, var(--card));
+  }
+  tbody td{ padding:10px 14px; border-bottom:1px solid var(--line); vertical-align:top; }
+  tbody tr:last-child td{ border-bottom:none; }
+  tbody tr:hover{ background:color-mix(in srgb, var(--accent) 4%, transparent); }
+  td.unit{ font-family:'JetBrains Mono',monospace; font-size:12px; color:var(--ink-soft); white-space:nowrap; }
+  td.num{ font-family:'JetBrains Mono',monospace; font-size:12.5px; color:var(--ink-soft); white-space:nowrap; }
+  td.concept{ font-weight:500; }
+
+  /* ranked list (high ROI) */
+  ol.ranked{ list-style:none; margin:0; padding:0; display:flex; flex-direction:column; gap:9px; }
+  ol.ranked li{
+    display:flex; gap:14px; align-items:flex-start; background:var(--card); border:1px solid var(--line);
+    border-radius:var(--radius-m); padding:13px 16px;
+  }
+  ol.ranked .rank{
+    font-family:'Fraunces',serif; font-weight:600; font-size:17px; color:var(--accent);
+    flex:none; width:26px; text-align:right; line-height:1.4;
+  }
+  ol.ranked .txt{ font-size:14px; line-height:1.5; }
+
+  /* mcq checklist grid */
+  .chk-grid{ display:grid; grid-template-columns:repeat(auto-fit,minmax(260px,1fr)); gap:9px; }
+  label.chk{
+    display:flex; gap:10px; align-items:flex-start; background:var(--card); border:1px solid var(--line);
+    border-radius:var(--radius-m); padding:11px 13px; font-size:13px; cursor:pointer; line-height:1.45;
+    transition:border-color .15s ease, background .15s ease;
+  }
+  label.chk:hover{ border-color:var(--accent); }
+  label.chk input{ margin-top:2px; accent-color:var(--accent); flex:none; width:15px; height:15px; cursor:pointer; }
+  label.chk.done{ background:color-mix(in srgb, var(--accent) 7%, var(--card)); }
+  label.chk.done span{ color:var(--ink-soft); text-decoration:line-through; text-decoration-color:var(--ink-faint); }
+
+  /* strategy callouts */
+  .strategy-grid{ display:grid; grid-template-columns:repeat(3,1fr); gap:14px; }
+  @media (max-width:760px){ .strategy-grid{ grid-template-columns:1fr; } }
+  .strat-card{ background:var(--card); border:1px solid var(--line); border-radius:var(--radius-m); padding:16px 17px; border-top:3px solid var(--line); }
+  .strat-card h4{ font-family:'Inter',sans-serif; font-size:11px; text-transform:uppercase; letter-spacing:.06em; font-weight:700; margin-bottom:9px; }
+  .strat-card.floor{ border-top-color:var(--med); } .strat-card.floor h4{ color:var(--med); }
+  .strat-card.push{ border-top-color:var(--accent); } .strat-card.push h4{ color:var(--accent); }
+  .strat-card.keep{ border-top-color:var(--must); } .strat-card.keep h4{ color:var(--must); }
+  .strat-card p{ margin:0; font-size:13.5px; color:var(--ink); line-height:1.6; }
+
+  /* study order */
+  .steps{ display:flex; flex-direction:column; }
+  .step{ display:grid; grid-template-columns:40px 1fr; gap:16px; padding:17px 0; border-bottom:1px solid var(--line); }
+  .step:last-child{ border-bottom:none; }
+  .step .n{ font-family:'Fraunces',serif; font-size:19px; font-weight:600; color:var(--accent); }
+  .step h4{ font-size:14.5px; font-weight:700; font-family:'Inter',sans-serif; margin-bottom:4px; }
+  .step p{ margin:0; font-size:13.5px; color:var(--ink-soft); line-height:1.6; }
+
+  /* prediction tiers */
+  .tier{ margin-bottom:16px; border-radius:var(--radius-m); overflow:hidden; border:1px solid var(--line); }
+  .tier-head{ padding:9px 15px; font-weight:700; font-size:12px; text-transform:uppercase; letter-spacing:.05em; }
+  .tier.high .tier-head{ background:var(--must-bg); color:var(--must); }
+  .tier.medium .tier-head{ background:var(--high-bg); color:var(--high); }
+  .tier.low .tier-head{ background:var(--low-bg); color:var(--low); }
+  .tier ul{ margin:0; padding:13px 18px 13px 32px; background:var(--card); font-size:13.5px; line-height:1.7; }
+  .tier li{ margin-bottom:3px; }
+  .pred-note{ font-size:13px; color:var(--ink-faint); font-style:italic; margin-top:4px; }
+
+  /* top20 */
+  .top20{ display:flex; flex-direction:column; gap:7px; }
+  .t20-row{ display:flex; gap:12px; align-items:flex-start; padding:9px 13px; border:1px solid var(--line); border-radius:var(--radius-s); background:var(--card); }
+  .t20-row .rn{ font-family:'JetBrains Mono',monospace; font-size:11.5px; color:var(--ink-faint); flex:none; width:20px; padding-top:1px; }
+  .t20-row input{ margin-top:2px; accent-color:var(--accent); flex:none; width:14px; height:14px; cursor:pointer; }
+  .t20-row span{ font-size:13.5px; line-height:1.5; }
+  .t20-row.done span{ color:var(--ink-soft); text-decoration:line-through; text-decoration-color:var(--ink-faint); }
+  .t20-row label{ display:flex; gap:10px; align-items:flex-start; cursor:pointer; flex:1; }
+
+  /* final order + last minute */
+  .finalbox{ background:var(--card); border:1px solid var(--line); border-radius:var(--radius-m); padding:18px 20px; font-size:14px; line-height:1.7; color:var(--ink); }
+  .lastmin{ list-style:none; margin:0; padding:0; display:flex; flex-direction:column; gap:8px; }
+  .lastmin li{ display:flex; gap:11px; align-items:flex-start; font-size:13.5px; line-height:1.55; }
+  .lastmin li::before{ content:"—"; color:var(--accent); flex:none; font-weight:700; }
+
+  footer{ text-align:center; padding:34px 20px 50px; color:var(--ink-faint); font-size:12px; }
+
+  /* panel switching */
+  .panel{ display:none; }
+  .panel.active{ display:block; animation:fade .35s ease; }
+  @keyframes fade{ from{ opacity:0; transform:translateY(4px); } to{ opacity:1; transform:translateY(0); } }
+
+  @media (max-width:480px){
+    .strategy-grid{ grid-template-columns:1fr; }
+    table{ font-size:12.5px; }
+    thead th, tbody td{ padding:8px 10px; }
+  }
+</style>
+</head>
+<body>
+
+<header class="topbar">
+  <div class="topbar-inner">
+    <div class="brand"><span class="mark"></span><span class="t1">Exam Roadmap</span><span class="t2">Oct/Nov 2026 · 4 subjects</span></div>
+    <div class="tabs-scroll"><div class="tabs" id="tabs"></div></div>
+    <button type="button" class="theme-toggle" id="themeToggle"></button>
+  </div>
+</header>
+
+<div class="page">
+  <div id="panels"></div>
+</div>
+
+<footer>Compiled from six-year PYQ pattern analysis against each subject's official syllabus. Predictions are pattern-based, not guarantees — breadth beats betting on any single question.</footer>
+
+<template id="tpl-panel">
+<div class="layout">
+  <nav class="sidenav">
+    <a href="#" data-sec="syllabus">Syllabus priority</a>
+    <a href="#" data-sec="repeated">Repeated questions</a>
+    <a href="#" data-sec="roi">High-ROI ranking</a>
+    <a href="#" data-sec="mcq">MCQ checklist</a>
+    <a href="#" data-sec="strategy">65+/70 strategy</a>
+    <a href="#" data-sec="units">Unit priority</a>
+    <a href="#" data-sec="order">Study order</a>
+    <a href="#" data-sec="prediction">2026 prediction</a>
+    <a href="#" data-sec="top20">Top 20</a>
+    <a href="#" data-sec="final">Final order &amp; revision</a>
+  </nav>
+  <main>
+    <div class="hero">
+      <div class="hero-top">
+        <div>
+          <h1 data-f="fullName"></h1>
+          <span class="code mono" data-f="code"></span>
+        </div>
+        <div class="ring-stat">
+          <div class="pct"><span data-f="pct">0</span>%</div>
+          <div class="lbl">checklist complete</div>
+          <button type="button" class="reset" data-f="resetBtn">reset progress</button>
+        </div>
+      </div>
+      <p class="hero-sub" data-f="intro"></p>
+      <div class="caveat" data-f="caveatBox" style="display:none;">
+        <b>Syllabus note</b>
+        <span data-f="caveat"></span>
+      </div>
+    </div>
+
+    <section class="block" id="sec-syllabus">
+      <div class="block-head"><span class="idx">01</span><h2>Syllabus × PYQ priority</h2></div>
+      <div class="legend">
+        <span class="pri MUST">must do</span><span class="pri HIGH">high</span><span class="pri MEDIUM">medium</span><span class="pri LOW">low</span>
+      </div>
+      <div class="twrap"><table data-f="syllabusTable"></table></div>
+    </section>
+
+    <section class="block" id="sec-repeated">
+      <div class="block-head"><span class="idx">02</span><h2>Repeated questions</h2></div>
+      <p class="block-note">Concepts that recur across old and new syllabus papers — frequency is how many of the available past papers tested it.</p>
+      <div class="twrap"><table data-f="repeatedTable"></table></div>
+    </section>
+
+    <section class="block" id="sec-roi">
+      <div class="block-head"><span class="idx">03</span><h2>High-ROI questions, ranked</h2></div>
+      <ol class="ranked" data-f="roiList"></ol>
+    </section>
+
+    <section class="block" id="sec-mcq">
+      <div class="block-head"><span class="idx">04</span><h2>MCQ checklist</h2></div>
+      <p class="block-note">Tick items off as you lock them in — your progress is saved on this device and feeds the completion ring above.</p>
+      <div class="chk-grid" data-f="mcqGrid"></div>
+    </section>
+
+    <section class="block" id="sec-strategy">
+      <div class="block-head"><span class="idx">05</span><h2>Strategy to clear 65+/70</h2></div>
+      <div class="strategy-grid">
+        <div class="strat-card floor"><h4>Safe floor</h4><p data-f="stratMin"></p></div>
+        <div class="strat-card push"><h4>Push further</h4><p data-f="stratPush"></p></div>
+        <div class="strat-card keep"><h4>Never skip</h4><p data-f="stratSkip"></p></div>
+      </div>
+    </section>
+
+    <section class="block" id="sec-units">
+      <div class="block-head"><span class="idx">06</span><h2>Unit-wise priority</h2></div>
+      <div class="twrap"><table data-f="unitsTable"></table></div>
+    </section>
+
+    <section class="block" id="sec-order">
+      <div class="block-head"><span class="idx">07</span><h2>Study order</h2></div>
+      <div class="steps" data-f="stepsList"></div>
+    </section>
+
+    <section class="block" id="sec-prediction">
+      <div class="block-head"><span class="idx">08</span><h2>Oct/Nov 2026 prediction</h2></div>
+      <p class="pred-note" data-f="predNoteTop" style="display:none;"></p>
+      <div class="tier high"><div class="tier-head">High confidence</div><ul data-f="predHigh"></ul></div>
+      <div class="tier medium"><div class="tier-head">Medium confidence</div><ul data-f="predMedium"></ul></div>
+      <div class="tier low"><div class="tier-head">Low confidence</div><ul data-f="predLow"></ul></div>
+      <p class="pred-note" data-f="predClosing"></p>
+    </section>
+
+    <section class="block" id="sec-top20">
+      <div class="block-head"><span class="idx">09</span><h2>Top 20 — must prepare</h2></div>
+      <div class="top20" data-f="top20List"></div>
+    </section>
+
+    <section class="block" id="sec-final">
+      <div class="block-head"><span class="idx">10</span><h2>Final study order &amp; last-minute revision</h2></div>
+      <div class="finalbox" data-f="finalOrder" style="margin-bottom:22px;"></div>
+      <ul class="lastmin" data-f="lastMinList"></ul>
+    </section>
+  </main>
+</div>
+</template>
+
+<script>
+/* ============================= DATA ============================= */
+const SUBJECTS = [
+{
+  id:'ev', shortName:'Hybrid EV', fullName:'Hybrid Electric Vehicle Design', code:'EEPEC-01C',
+  accent:'#1C86B4',
+  intro:'Target: push toward 65+/70. Pattern confidence is lower here than the other three subjects — only one past paper matches the current syllabus.',
+  caveat:"The syllabus changed in 2026. Only ONE past paper (SLR-QH-568, March/April 2026) matches the current EEPEC-01C syllabus and its Section I/Section II, 70-mark format. The other 4 papers (2022–2024) are for the OLD syllabus (BTN07610, semester II, different format: Q1 = 10 marks MCQ, Q2 = any five of six = 40 marks, no sections). Those old papers still teach useful overlapping CONCEPTS (motor types, battery chemistry, BMS, regenerative braking, EV classification) but their exact question pattern will NOT repeat. Treat predictions here as lower confidence than the other 3 subjects, and prioritize the one 2026 paper as your main pattern guide.",
+  syllabus:[
+    ['1','History and evolution of EVs','MEDIUM'],
+    ['1','Components of EV, comparison with ICE','MUST'],
+    ['1','EV classification and electrification levels','MUST'],
+    ['1','EV terminology','MEDIUM'],
+    ['2','Rolling resistance calculation','MUST'],
+    ['2','Grade resistance calculation','HIGH'],
+    ['2','Acceleration force calculation','HIGH'],
+    ['2','Tractive effort and torque on drive wheel','MUST'],
+    ['3','Types of EVs: BEV, HEV, PHEV, FCEV with components','MUST'],
+    ['3','Photovoltaic/solar-based EV design','HIGH'],
+    ['3','Electrical protection and system requirements','MEDIUM'],
+    ['3','Comparison of fuel vs electric vs solar power','HIGH'],
+    ['4','Types of motors used in EV (PMSM, induction, DC)','MUST'],
+    ['4','Motor selection and sizing','MUST'],
+    ['4','Motor controller components','HIGH'],
+    ['4','RPM and torque calculation of motor','HIGH'],
+    ['5','Cell types: Lead-acid, Li-ion, NiMH — chemistry/reactions','MUST'],
+    ['5','Battery charging/discharging calculation','MUST'],
+    ['5','Battery pack configuration and construction','HIGH'],
+    ['5','Cell selection and sizing','MEDIUM'],
+    ['6','Need of BMS','MUST'],
+    ['6','Rule-based vs optimization-based control','HIGH'],
+    ['6','Software-based high-level supervisory control (block diagram)','MUST'],
+    ['6','Cell balancing, overcharge/undercharge protection','MUST'],
+    ['6','AI in Electric Vehicles','LOW'],
+  ],
+  repeated:[
+    ['Radiator is NOT a component of EV (ICE part)','1 (MCQ)','New paper only','1','2026','MUST'],
+    ['PMSM favored for high efficiency and power density','4 (MCQ)','2 papers','1','2024, 2026','MUST'],
+    ['Regenerative braking captures kinetic energy, charges battery','5/6 (MCQ+theory)','4/5 papers','1–4','2022–2024, 2026','MUST'],
+    ['BMS prevents overcharge/undercharge, does cell balancing','6 (MCQ+theory)','4/5 papers','1–6','2022–2026','MUST'],
+    ['Li-ion electrolyte is a lithium-based gel/compound','5 (MCQ)','New paper','1','2026','MEDIUM'],
+    ['Fuel cell EV uses Hydrogen','3 (MCQ)','New paper','1','2026','MUST'],
+    ['Cells in parallel increase current capacity','5 (MCQ)','2 papers','1','2024, 2026','HIGH'],
+    ['Tractive effort = force at wheels to move the vehicle','2 (MCQ)','New paper','1','2026','MUST'],
+    ['Air drag force increases with speed squared','2 (MCQ)','New paper','1','2026','MUST'],
+    ['EV classification and electrification levels (full theory)','1','New paper + concept overlap','4–6','2026','MUST'],
+    ['Tractive effort and torque calculation (full numerical)','2','New paper, core unit focus','6','2026','MUST'],
+    ['EV architecture — draw and explain components','3','New paper','6','2026','MUST'],
+    ['Types of electric motors — explain one with characteristics','4','New + old papers','4–6','2022–2026','MUST'],
+    ['Lead-acid battery charge/discharge with chemical reactions','5','New + old overlap','4–6','2022–2026','MUST'],
+    ['Li-ion battery charge/discharge with chemical reactions','5','New paper','6','2026','MUST'],
+    ['BMS software-based supervisory control block diagram','6','New paper','6','2026','MUST'],
+    ['Factors for selecting electric motor for EV','4','New + old overlap','6','2022–2026','HIGH'],
+    ['Series/parallel/split hybrid classification','1/3','2/5 old papers','1–4','2022–2023','MEDIUM'],
+    ['Energy management strategies (rule-based, optimization)','6','Old + new overlap','4–6','2022–2026','HIGH'],
+  ],
+  roi:[
+    'Tractive effort and torque calculation numerical (Unit 2 core) — 6 marks, the defining numerical of the new syllabus',
+    'EV architecture — draw and explain components (BEV/HEV/PHEV/FCEV) — 6 marks',
+    'Lithium-ion battery charging/discharging with chemical reactions — 6 marks',
+    'Lead-acid battery discharging with chemical reactions — 4–6 marks',
+    'BMS software-based supervisory control (block diagram) — 6 marks',
+    'Need of BMS + cell balancing + overcharge/undercharge protection — 4–6 marks',
+    'EV classification and electrification levels — 4–6 marks',
+    'Types of electric motors with one explained in detail (characteristics) — 4–6 marks',
+    'Motor controller components explanation — 4 marks',
+    'Factors in selecting electric motor for EV — 6 marks',
+  ],
+  mcq:[
+    'Radiator is NOT a component of an EV (that is an ICE part)',
+    'Primary benefit of EVs: low noise and low pollution',
+    'EVs have maximum torque at low RPM (opposite of ICE)',
+    'Air drag force increases with speed squared',
+    'Tractive effort = force at the wheels needed to move the vehicle',
+    'Fuel Cell EV (FCEV) uses Hydrogen',
+    'PHEV can be charged by plug-in charger, regenerative braking, and the onboard engine',
+    'Motor Generator (MG) assists the engine during acceleration and acts as main power source at start',
+    'PMSM favored in modern EVs for high efficiency and power density',
+    'Li-ion battery electrolyte is a lithium-based gel/compound',
+    'Cells connected in parallel increase current capacity (not voltage)',
+    'BMS prevents overcharging and undercharging of individual cells',
+    'Cell balancing ensures each cell contributes equally to pack capacity and lifespan',
+    'Lead-acid battery: positive plate forms lead peroxide after charging; lead sulphate forms after discharge on both plates',
+    'Super capacitors are also known as Ultracapacitors',
+    'Regenerative braking reclaims kinetic energy during braking and converts it to electrical energy to charge the battery',
+    'Mild hybrid typically uses 48V battery system',
+    'Hybrid vehicle normally has 30–70 km range in pure electric mode',
+    'Series hybrid: propelled by electric motor only; parallel hybrid: propelled by ICE or battery/motor or both',
+    'Energy management strategies: rule-based, optimization-based, global optimization (regression is NOT a standard strategy)',
+  ],
+  strategy:{
+    min:"Master the full MCQ checklist (14 marks) plus items 1–6 in the High-ROI list plus Units 2, 5 and 6 long answers from the new syllabus — a safe 45–50/70, given this subject has more pattern uncertainty.",
+    push:"Add EV architecture full explanation (Unit 3), all three battery chemistries (lead-acid, Li-ion, NiMH) not just one, and the motor selection/sizing factors (Unit 4). Since only one past paper matches the new format, breadth of syllabus coverage matters more here than in the other 3 subjects — do not over-rely on repeated-question patterns alone.",
+    skip:"Tractive effort and torque calculation (Unit 2) — the one numerical-heavy unit in an otherwise theory-heavy subject, and explicitly the course's stated Unit 2 objective, so very likely to appear.",
+  },
+  units:[
+    ['1','Introduction: Electric Vehicle','8–10','Section I','MUST'],
+    ['2','Motor Torque Calculations for EV','6–10','Section I, numerical-heavy','MUST'],
+    ['3','EV Architecture Design','6–10','Section I','MUST'],
+    ['4','Electric Drive and Controller','10–12','Section II','MUST'],
+    ['5','Energy Storage Solutions (ESS)','10–12','Section II','MUST'],
+    ['6','BMS/EMS','10–12','Section II','MUST'],
+  ],
+  steps:[
+    ['Study','History/evolution of EVs, components, comparison with ICE, EV classification and electrification levels, EV terminology (Unit 1).','This is the vocabulary for the entire subject — every later unit assumes you know what a BEV, HEV, PHEV, mild/full hybrid means.'],
+    ['Master','Tractive effort, rolling resistance, grade resistance, acceleration force calculation (Unit 2).','This is the only numerically rigorous unit in the subject, directly named as a course objective, and is best tackled early while focus is sharp.'],
+    ['Study','EV architecture — types of EVs, components, solar/PV-based EV design, comparison of fuel vs electric vs solar (Unit 3).','Natural continuation of Unit 1\u2019s classification, now going one level deeper into how each type is built.'],
+    ['Practice','Types of motors (PMSM, induction, DC), motor selection/sizing, motor controller components, RPM/torque calculation (Unit 4).','Directly uses the tractive-effort/torque concepts from Step 2, applied now to motor choice.'],
+    ['Master','Battery chemistry — lead-acid, Li-ion, NiMH charging/discharging reactions, cell selection/sizing, battery pack configuration (Unit 5).','A fresh, self-contained topic (chemistry-based) that is independent of motors, best studied with full attention once mechanical/electrical units are done.'],
+    ['Study then master','Need of BMS, rule-based vs optimization control, software-based supervisory control block diagram, cell balancing (Unit 6).','BMS only makes sense once battery chemistry (Step 5) is understood — it is literally the control layer sitting on top of the battery pack.'],
+    ['Practice','The single available 2026-pattern past paper end to end, then cross-check concepts (not question format) against the older BTN07610 papers for extra practice on motors, batteries, and braking systems.',''],
+  ],
+  prediction:{
+    note:'Confidence is lower than the other 3 subjects since only one past paper matches the current format.',
+    high:[
+      'Tractive effort/torque calculation numerical (Unit 2, 6 marks — explicitly the course\u2019s numerical focus)',
+      'EV classification and electrification levels (Unit 1, 4–6 marks)',
+      'Types of electric motors with one explained in detail (Unit 4, 4–6 marks)',
+      'Battery charging/discharging with chemical reactions, lead-acid or Li-ion (Unit 5, 4–6 marks)',
+      'Need of BMS and cell balancing (Unit 6, 4–6 marks)',
+      'MCQs on EV components, PMSM, regenerative braking, BMS functions, FCEV/hydrogen',
+    ],
+    medium:[
+      'EV architecture full diagram and explanation (Unit 3, 6 marks)',
+      'BMS software-based supervisory control block diagram (Unit 6, 6 marks)',
+      'Motor controller components (Unit 4, 4 marks)',
+      'Rolling/grade resistance as a separate numerical sub-part (Unit 2)',
+    ],
+    low:[
+      'AI in electric vehicles as a dedicated question',
+      'Photovoltaic/solar EV design as a large standalone question',
+      'NiMH battery reactions as the primary battery question (lead-acid and Li-ion are more established in both old and new papers)',
+    ],
+    closing:'These are pattern-based predictions with extra uncertainty due to the 2026 syllabus change — prepare across the full syllabus breadth rather than betting heavily on any single predicted question.',
+  },
+  top20:[
+    'Tractive effort and torque calculation — full numerical',
+    'Rolling resistance calculation',
+    'Grade resistance calculation',
+    'Acceleration force calculation',
+    'EV classification and electrification levels',
+    'Comparison of EV vs ICE vehicles (powertrain, efficiency, emissions)',
+    'EV architecture — types (BEV/HEV/PHEV/FCEV) with components diagram',
+    'Photovoltaic/solar-based EV design',
+    'Types of electric motors used in EV (explain PMSM or induction in detail)',
+    'Motor selection and sizing factors',
+    'Motor controller components',
+    'Lead-acid battery — charging and discharging with chemical reactions',
+    'Li-ion battery — charging and discharging with chemical reactions',
+    'NiMH battery — charging process with chemical reactions',
+    'Battery pack configuration and construction',
+    'Need of Battery Management System (BMS)',
+    'Cell balancing and overcharge/undercharge protection',
+    'Software-based high-level supervisory control in BMS (block diagram)',
+    'Rule-based vs optimization-based energy management control',
+    'Regenerative braking — concept and fundamentals',
+  ],
+  finalOrder:"Follow the study order: EV basics and classification first, then tractive effort/torque numericals, then EV architecture, then motors, then battery chemistry, then BMS/EMS last, then the one available 2026-format past paper plus concept practice from older papers.",
+  lastMin:[
+    'Re-read the MCQ checklist once, out loud if possible',
+    'Re-practice the tractive effort/torque numerical once from scratch',
+    'Re-write lead-acid AND Li-ion battery charge/discharge reactions from memory',
+    'Re-check the BMS supervisory control block diagram and cell balancing explanation',
+    'Formula sheet check: rolling resistance, grade resistance, acceleration force, tractive effort formulas',
+    'Remember: this subject\u2019s pattern is less certain than the other 3 due to the 2026 syllabus change — prioritize breadth across all 6 units over betting on any single predicted question',
+  ],
+},
+{
+  id:'em', shortName:'Electromagnetics', fullName:'Electromagnetic Engineering', code:'EEPCC-07',
+  accent:'#3A5FD9',
+  intro:'Based on 6 years of PYQs (2022–2026) against the official syllabus. Target: 65+/70.',
+  caveat:null,
+  syllabus:[
+    ['1','Coordinate systems (cylindrical, spherical) — conversions','MUST'],
+    ['1','Vector transform between coordinate systems (numerical)','MUST'],
+    ['1','Curl, divergence, gradient — definitions and basic proofs','HIGH'],
+    ['1','Dot and cross product numericals','MEDIUM'],
+    ['2','Gauss law — statement, 2 applications','MUST'],
+    ['2','Electric field due to line/sheet/point charge','MUST'],
+    ['2','Electric field intensity due to continuous charge distribution','HIGH'],
+    ['2','Relation between E and V, derive','MUST'],
+    ['2','Divergence theorem numerical','HIGH'],
+    ['3','Continuity equation derivation','MUST'],
+    ['3',"Poisson's and Laplace's equation derivation",'MUST'],
+    ['3','Parallel plate capacitor numerical (C and Q)','MUST'],
+    ['3','Boundary conditions for electric fields','MEDIUM'],
+    ['4','Biot–Savart law and applications','MUST'],
+    ['4',"Ampere's circuital law — state and prove (point form)",'MUST'],
+    ['4','H due to current filament/finite length element','MUST'],
+    ['4',"Stoke's theorem — verify/evaluate both sides",'MUST'],
+    ['4','Vector magnetic potential','HIGH'],
+    ['4','Force on current-carrying wire','MEDIUM'],
+    ['5','Boundary conditions in magnetic field — derive','MUST'],
+    ['5','Inductance of toroid (rectangular cross-section)','HIGH'],
+    ['5','Nature of magnetic materials (dia/para/ferro/antiferro)','MEDIUM'],
+    ['6',"Maxwell's equations derivation from Gauss law (point + integral form)",'MUST'],
+    ['6',"Word statement of all 4 Maxwell's equations",'MUST'],
+    ['6','Displacement current and current density','MEDIUM'],
+  ],
+  repeated:[
+    ['Unit vector: magnitude one, no fixed direction','1 (MCQ)','5/7 papers','1','2022–2026','MUST'],
+    ['Cylindrical dv = r dr dφ dz','1 (MCQ)','6/7','1','2022–2026','MUST'],
+    ['Spherical x = r sinθ cosφ','1 (MCQ)','5/7','1','2022–2026','MUST'],
+    ['E = −grad(V)','2 (MCQ)','5/7','1','2022–2026','MUST'],
+    ['Capacitance increases with more area, less distance','3 (MCQ)','5/7','1','2022–2026','MUST'],
+    ["Curl H = J is Ampere's law",'4 (MCQ)','4/7','1','2022–2024','MUST'],
+    ['Lorentz force F = Q[E + V×B]','4 (MCQ)','4/7','1','2022–2025','MUST'],
+    ['Magnetic energy = BH/2','5 (MCQ)','4/7','1','2022–2025','MUST'],
+    ['Energy density magnetic = ½μH²','5 (MCQ)','3/7','1','2023–2026','HIGH'],
+    ['Anti-ferromagnetic: Mn oxide, Cr oxide, Fe oxide','5 (MCQ)','3/7','1','2023–2024','HIGH'],
+    ['Parallel plate capacitor: 0.04 m², εr=2, d=1cm, find C and Q at V=10V','3','3/7 identical','4','2024, 2025, 2026','MUST'],
+    ['State Gauss law + 2 applications','2','7/7','4–6','2022–2026','MUST'],
+    ["Derive Poisson's and Laplace's equations",'3','6/7','4–6','2022–2026','MUST'],
+    ['Transform vector between Cartesian/cylindrical/spherical','1','6/7','4–6','2022–2026','MUST'],
+    ['Derive relation between E and V','2','6/7','4','2022–2026','MUST'],
+    ['Derive continuity equation for current','3','6/7','4','2022–2026','MUST'],
+    ["State and prove Ampere's circuital law (point form)",'4','7/7','4–6','2022–2026','MUST'],
+    ["Evaluate Stoke's theorem for given H field (same style every year)",'4','6/7 near identical','6','2022–2026','MUST'],
+    ['Derive boundary conditions in magnetic field','5','7/7','6','2022–2026','MUST'],
+    ["Derive Maxwell's equations from Gauss law (point + integral)",'6','7/7','4–6','2022–2026','MUST'],
+    ['Divergence theorem: D = 5r²/4 âr, r=1 to 2 (exact repeat)','2','2/7 identical','6','2024, 2025','HIGH'],
+    ['Three point-charge force numerical (identical numbers)','2','2/7 identical','6','2024, 2025','MEDIUM'],
+    ['Inductance of toroid (rectangular cross-section) derivation','5','4/7','6','2022–2024, 2023','HIGH'],
+  ],
+  roi:[
+    "Ampere's circuital law — state and prove (point form) — 4–6 marks, every single paper",
+    "Maxwell's equations derivation from Gauss law — 4–6 marks, every paper",
+    'Boundary conditions in magnetic field derivation — 6 marks, every paper, Q5 slot',
+    "Stoke's theorem evaluation (same H-field style repeats) — 6 marks, 6/7 years",
+    'Gauss law statement + 2 applications — 4–6 marks, every paper',
+    'Parallel plate capacitor numerical (fixed dataset) — 4 marks, 3/7 years identical',
+    "Poisson's and Laplace's equation derivation — 4–6 marks, every paper",
+    'Coordinate transformation numerical (Cartesian/cylindrical/spherical) — 4–6 marks, every paper',
+    'Continuity equation derivation — 4 marks, every paper',
+    'E–V relation derivation — 4 marks, every paper',
+  ],
+  mcq:[
+    'Unit vector has magnitude one, but no fixed direction (direction varies by context)',
+    'Cylindrical differential volume: dv = r dr dφ dz',
+    'Spherical to Cartesian: x = r sinθ cosφ, y = r sinθ sinφ, z = r cosθ',
+    'Relation between field and potential: E = −grad(V)',
+    'Electric field intensity = force per unit charge on a test charge',
+    'Capacitance increases with more plate area and less distance between plates',
+    'Units of capacitance: coulombs per volt (farad)',
+    "Curl H = J is Ampere's circuital law (point form)",
+    'B = curl of A (magnetic vector potential relation)',
+    'Lorentz force equation: F = Q(E + V × B)',
+    'Energy stored in inductor = ½LI²; magnetic energy density = ½μH²; magnetic energy of a material = BH/2',
+    'Flux linkage = number of turns × flux',
+    "Biot–Savart law calculates magnetic field due to a current-carrying segment (analogous to Coulomb's law)",
+    'Anti-ferromagnetic materials: Manganese oxide, Chromium oxide, Ferrous oxide (iron/cobalt/nickel are ferromagnetic; zinc/bismuth/silver/gold are diamagnetic)',
+    "Coulomb's law is employed in electrostatics",
+    'Dot product zero means vectors are perpendicular; cross product zero means parallel',
+    'Gauss law: total electric flux through a closed surface equals the charge enclosed',
+    'Divergence of H (or B) is always zero (no magnetic monopoles)',
+    'Potential difference in an open circuit is infinity',
+    'Octave and decade style ratio questions for frequency — know ω2/ω1 ratios where asked',
+    "Point form of Ohm's law: J = σE",
+  ],
+  strategy:{
+    min:"Master the full MCQ checklist (14 marks) plus items 1–7 in the High-ROI list plus Units 2, 4 and 6 long answers — a safe 50–55/70.",
+    push:"Add the parallel plate capacitor numerical (guaranteed, nearly free marks), the Stoke's theorem evaluation style problem, the divergence theorem numerical with D = 5r²/4 âr, inductance of toroid derivation, and both coordinate-transform directions (Cartesian-to-cylindrical AND Cartesian-to-spherical).",
+    skip:"Gauss law statement with 2 applications and Ampere's circuital law statement and proof — these two alone are worth 8–12 guaranteed marks across the paper and are pure bookwork, not calculation-risk.",
+  },
+  units:[
+    ['1','Vector Analysis and Coordinate Systems','8–10','Every paper, Q2','MUST'],
+    ['2',"Coulomb's Law and Static Electric Fields",'10–12','Every paper, Q2 and Q3','MUST'],
+    ['3','Conductors and Dielectrics','8–10','Every paper, Q2 and Q3','MUST'],
+    ['4','Static Magnetic Field','10–12','Every paper, Q4','MUST'],
+    ['5','Fields in Magnetic Material','8–10','Every paper, Q4 and Q5','MUST'],
+    ['6',"Maxwell's Equations",'8–10','Every paper, Q4 and Q5','MUST'],
+  ],
+  steps:[
+    ['Study','Coordinate systems (rectangular, cylindrical, spherical) and conversions between them, plus dot/cross products (Unit 1).','Every single later derivation and numerical in this subject is written in one of these three coordinate systems — this is the alphabet of the whole course.'],
+    ['Master','Coordinate transformation numericals — a given vector transformed to cylindrical or spherical at a point (Unit 1 continued).','This exact skill is tested every year and is pure mechanical practice once the system is understood.'],
+    ['Study',"Coulomb's law, electric field intensity, E due to line/sheet charge, Gauss law statement with applications (Unit 2).",'This is the conceptual core of electrostatics and everything in Units 2–3 builds on it.'],
+    ['Master','E–V relation derivation, divergence theorem numerical (Unit 2 continued).','Direct continuation of Step 3, and divergence theorem numericals repeat almost identically across years.'],
+    ['Practice',"Continuity equation, Poisson's and Laplace's equations, parallel plate capacitor numerical (Unit 3).",'Natural progression from electric fields to conductors/dielectrics, and the capacitor numerical is a guaranteed near-identical repeat.'],
+    ['Study',"Biot–Savart law, Ampere's circuital law statement and proof (Unit 4).","Magnetostatics mirrors electrostatics structurally (Biot–Savart is to magnetism what Coulomb's law is to electricity), so the Unit 2 foundation makes this faster to learn."],
+    ['Master',"Stoke's theorem evaluation, H due to current filament, vector magnetic potential (Unit 4 continued).","Stoke's theorem problems repeat in nearly the same form every year — once mastered, it is reliable marks."],
+    ['Practice','Boundary conditions in magnetic field, inductance of toroid, nature of magnetic materials (Unit 5).','Builds directly on the magnetic field concepts just mastered in Steps 6–7.'],
+    ['Study then master',"Maxwell's four equations — derive from Gauss law (point and integral form), then memorize the word statements (Unit 6).","Maxwell's equations are the synthesis of everything before them, so they make far more sense once Units 2–5 are solid."],
+    ['Practice',"Full past papers end to end (2–3 timed attempts), focusing on the Stoke's theorem problem and the parallel plate capacitor numerical since both repeat almost verbatim.",''],
+  ],
+  prediction:{
+    note:null,
+    high:[
+      "Ampere's circuital law — state and prove in point form (4–6 marks)",
+      "Maxwell's equations derived from Gauss law, point and integral form (4–6 marks)",
+      'Boundary conditions in magnetic field derivation (6 marks)',
+      "Stoke's theorem evaluation for a given H field (6 marks)",
+      'Gauss law statement with 2 applications (4–6 marks)',
+      'Parallel plate capacitor numerical with the recurring 0.04 m² / εr=2 / 1cm dataset (4 marks)',
+      'Coordinate transformation numerical (4–6 marks)',
+      "MCQs on unit vectors, cylindrical dv, E=−gradV, Ampere's law, Lorentz force, magnetic energy",
+    ],
+    medium:[
+      "Poisson's and Laplace's equation derivation (4–6 marks)",
+      'Continuity equation derivation (4 marks)',
+      'Divergence theorem numerical with D = 5r²/4 âr (6 marks)',
+      'Inductance of toroid with rectangular cross-section (6 marks)',
+      'E–V relation derivation (4 marks)',
+    ],
+    low:[
+      'Three point-charge force numerical as a standalone large question',
+      'Nature/classification of magnetic materials as a full dedicated question (more commonly a short MCQ or sub-part)',
+      'Displacement current derivation as a large standalone question',
+    ],
+    closing:'These are pattern-based predictions, not guarantees. Prepare the full MUST DO list regardless of this forecast.',
+  },
+  top20:[
+    "Ampere's circuital law — state and prove in point form",
+    "Maxwell's equations — derive from Gauss law (point and integral form)",
+    "Word statement of all 4 Maxwell's equations",
+    'Boundary conditions in magnetic field — full derivation',
+    "Stoke's theorem — evaluate both sides for a given H field",
+    'Gauss law — statement + mathematical expression + 2 applications',
+    'Parallel plate capacitor numerical (C and Q)',
+    "Poisson's and Laplace's equations — derivation with conditions",
+    'Coordinate transformation: Cartesian to cylindrical (numerical)',
+    'Coordinate transformation: Cartesian to spherical (numerical)',
+    'Continuity equation for current — derivation',
+    'Relation between E and V — derivation',
+    'Divergence theorem — evaluate both sides for a given D',
+    'Inductance of toroid with rectangular cross-section',
+    'Biot–Savart law — statement and application',
+    'Vector magnetic potential — explanation and B = curl(A)',
+    'H due to a finite current-carrying element/filament',
+    'Force on a current-carrying wire — derivation',
+    'Nature of magnetic materials (dia/para/ferro/antiferro) with examples',
+    'Electric field due to infinite sheet/line charge — derivation',
+  ],
+  finalOrder:"Coordinate systems first, then electrostatics (Coulomb/Gauss/E–V relation), then conductors/dielectrics (continuity, Poisson/Laplace, capacitor), then magnetostatics (Biot–Savart, Ampere's law, Stoke's theorem), then magnetic materials (boundary conditions, inductance), then Maxwell's equations last, then full timed practice papers.",
+  lastMin:[
+    'Re-read the MCQ checklist once, out loud if possible',
+    "Re-derive Maxwell's 4 equations (point and integral form) from memory, with word statements",
+    "Re-practice the parallel plate capacitor numerical and the Stoke's theorem evaluation problem once each",
+    'Re-check both coordinate transform directions (to cylindrical and to spherical) with a fresh point',
+    "Formula sheet check: Gauss law expression, Ampere's law point form, boundary condition equations (tangential/normal E and H), Biot–Savart law vector form",
+    'Skim the prediction section once — do not panic if the exact numbers differ, the method is what is tested',
+  ],
+},
+{
+  id:'lcs', shortName:'Control System', fullName:'Linear Control System', code:'EEPCC-09',
+  accent:'#13A8C7',
+  intro:'Based on 6 years of PYQs (2022–2026) against the official syllabus. Target: 65+/70.',
+  caveat:null,
+  syllabus:[
+    ['1','Open loop vs closed loop, classification, examples','MUST'],
+    ['1','Effect of feedback on sensitivity, gain, stability','HIGH'],
+    ['1','Transfer function definition, open/closed loop TF','MUST'],
+    ['2','TF of electrical network (RLC, Vo/Vi)','MUST'],
+    ['2','TF of mechanical translational system','MUST'],
+    ['2','Force-Voltage and Force-Current analogy','MUST'],
+    ['2','TF of DC servomotor','HIGH'],
+    ['2','TF of AC servomotor','MEDIUM'],
+    ['3','Block diagram reduction technique','MUST'],
+    ['3','Signal Flow Graph terminology','MEDIUM'],
+    ['3',"Mason's Gain Formula numerical",'MUST'],
+    ['3','Block diagram to SFG conversion','HIGH'],
+    ['4','Standard test signals','LOW'],
+    ['4','Rise time, peak time derivation (2nd order underdamped)','MUST'],
+    ['4','2nd order system numerical (peak time, overshoot, settling, rise time)','MUST'],
+    ['4','Steady state error, error constants Kp Kv Ka','MUST'],
+    ['4','P, PI, PD, PID controllers','HIGH'],
+    ['5','Routh–Hurwitz stability (incl. special cases)','MUST'],
+    ['5','Root locus construction and sketching','MUST'],
+    ['5','Stability from pole location / root locus','MUST'],
+    ['6','Frequency domain specifications','MEDIUM'],
+    ['6','Bode plot construction + GM/PM','MUST'],
+    ['6','Correlation time domain vs frequency domain','LOW'],
+    ['6','Polar plot','MEDIUM'],
+  ],
+  repeated:[
+    ['F-V analogy: capacitance reciprocal ↔ spring stiffness','2 (MCQ)','5/6','1','2022–2026','MUST'],
+    ['F-I analogy: capacitance ↔ mass','2 (MCQ)','4/6','1','2022–2026','MUST'],
+    ['Mason\u2019s gain formula gives overall TF from SFG','3 (MCQ)','5/6','1','2022–2026','MUST'],
+    ['Bode plot magnitude unit = decibel','6 (MCQ)','5/6','1','2022–2026','MUST'],
+    ['Root locus symmetric about real axis','5 (MCQ)','4/6','1','2022–2025','HIGH'],
+    ['Position error coefficient Kp = lim G(s), s→0','4 (MCQ)','5/6','1','2022–2026','MUST'],
+    ['Stability condition: GM and PM both positive','6 (MCQ)','4/6','1','2022–2024','MUST'],
+    ['AC servomotor = two-phase induction motor','2 (MCQ)','3/6','1','2023–2025','MEDIUM'],
+    ['TF of RLC electrical network (Vo/Vi)','2','6/6','4','2022–2026','MUST'],
+    ['TF of mechanical translational system','2','6/6','4','2022–2026','MUST'],
+    ['Block diagram reduction numerical','3','6/6','4–6','2022–2026','MUST'],
+    ['Mason\u2019s gain formula numerical','3','6/6','4–6','2022–2026','MUST'],
+    ['SFG to find C/R','3','5/6','4','2022–2026','MUST'],
+    ['F-V and F-I analogy derivation (full problem)','2','6/6','6','2022–2026','MUST'],
+    ['Rise time and peak time derivation (2nd order underdamped)','4','6/6','4–6','2022–2026','MUST'],
+    ['2nd order numerical: G(s)=25/s(s+5) type, find peak time/OS%/settling/rise','4','2/6 near identical','4','2023, 2026','MUST'],
+    ['Routh–Hurwitz stability for given characteristic equation','5','6/6','4–6','2022–2026','MUST'],
+    ['Root locus sketch for given OLTF','5','6/6','6','2022–2026','MUST'],
+    ['Bode plot + GM/PM, G(s)H(s)=80/[s(s+2)(s+20)]','6','2/6 exact repeat','6','2025, 2026','MUST'],
+    ['Steady state error / error constants numerical','4','5/6','6','2022–2025','HIGH'],
+    ['DC/AC servomotor TF derivation','2','4/6','4–6','2022–2025','HIGH'],
+  ],
+  roi:[
+    'Root locus sketch + stability comment — 6 marks, every year, Q5 slot',
+    'Bode plot construction + GM/PM + stability comment — 6 marks, every year, Q5 slot (one dataset repeats exactly)',
+    'Rise time/peak time derivation for 2nd order underdamped system — 4–6 marks, every year',
+    'TF derivation of RLC network and mechanical system — 4 marks each, every year, two separate guaranteed questions',
+    'Block diagram reduction numerical — 4–6 marks, every year',
+    "Mason's gain formula numerical — 4–6 marks, every year",
+    'Routh–Hurwitz stability check — 4–6 marks, every year',
+    'F-V/F-I analogy full derivation — 6 marks, every year',
+    'Steady state error and error constants numerical — 6 marks, 5/6 years',
+    'DC servomotor TF derivation — 6 marks, 4/6 years',
+  ],
+  mcq:[
+    'Force-Voltage analogy: mass↔inductance, friction↔resistance, spring stiffness↔1/capacitance, displacement↔charge, velocity↔current',
+    'Force-Current analogy: mass↔capacitance, friction↔1/resistance, spring stiffness↔1/inductance, displacement↔flux linkage, velocity↔voltage',
+    "Mason's gain formula gives overall transfer function from a signal flow graph",
+    'Bode plot magnitude is measured in decibels',
+    'Root locus is symmetric about the real axis',
+    'Root locus branches equal the number of poles (when poles exceed zeros)',
+    'Position error coefficient Kp = limit of G(s) as s→0',
+    'Velocity error coefficient Kv = limit of sG(s) as s→0',
+    'Acceleration error coefficient Ka = limit of s²G(s) as s→0',
+    'System is stable when both Gain Margin and Phase Margin are positive',
+    'AC servomotor is basically a two-phase induction motor',
+    'Pole at origin contributes −20 dB/decade slope on the magnitude plot',
+    'Phase margin specifies relative stability',
+    'Root locus and Bode plot are used for stability and transient response analysis',
+    'Type-1 system: steady state acceleration error is infinite; Type-2: position and velocity errors are zero',
+    'Routh–Hurwitz criterion gives roots in the right half of the s-plane (instability) or confirms left-half (stable)',
+    'Angle condition for root locus: ±(2q+1) × 180°',
+    'Integral control (PI) reduces/eliminates steady state error; derivative control (PD) improves transient response and damping',
+    'Damping ratio of practical control systems is designed less than unity (underdamped, fast response)',
+    'Impulse signal value at t=0 is infinite (unit area)',
+    'Octave: ω2/ω1 = 2; Decade: ω2/ω1 = 10',
+  ],
+  strategy:{
+    min:"Master the full MCQ checklist (14 marks) plus items 1–7 in the High-ROI list plus Units 2, 3 and 5 long answers — a safe 50–55/70.",
+    push:"Add both root locus AND Bode plot full numericals (not just one), the steady-state error/error constants numerical, DC servomotor derivation, and the P/PI/PD/PID controller comparison (short, high-value theory).",
+    skip:"Block diagram reduction and Mason's gain formula — these two alone appear in nearly every paper across Q2 and Q3, often worth 8–10 marks combined, and are mechanical/practice-based rather than conceptually hard.",
+  },
+  units:[
+    ['1','Introduction to Control System','4–6','Every paper (mostly MCQ + short theory)','HIGH'],
+    ['2','Mathematical Models of Physical Systems','10–12','Every paper, Q2','MUST'],
+    ['3','Reduction of Multiple Systems','10–12','Every paper, Q2 and Q3','MUST'],
+    ['4','Time-Response Analysis','10–12','Every paper, Q4','MUST'],
+    ['5','Stability and Root Locus','10–12','Every paper, Q4 and Q5','MUST'],
+    ['6','Frequency Response Analysis','10–12','Every paper, Q5','MUST'],
+  ],
+  steps:[
+    ['Study','Open loop vs closed loop systems, feedback, sensitivity, transfer function definition (Unit 1).','Every later topic refers back to the open/closed loop vocabulary and the transfer function concept.'],
+    ['Master','Transfer functions of RLC electrical networks and mechanical translational systems, plus F-V and F-I analogy (Unit 2).','These are the two guaranteed 4–6 mark questions every single year, and comfort with differential equations and Laplace transforms is needed before anything else makes sense.'],
+    ['Practice',"Block diagram reduction rules, then Mason's gain formula on signal flow graphs (Unit 3).",'Pure technique (not new theory), builds on the transfer functions from Step 2, and is the single most repeated skill in the whole paper.'],
+    ['Study','Standard test signals, poles/zeros, and the 2nd order underdamped step response — rise time, peak time, overshoot, settling time (Unit 4).','A natural extension of transfer functions (Step 2) and appears as a near-identical numerical every year.'],
+    ['Master','Steady state error and error constants Kp, Kv, Ka, then P/PI/PD/PID controllers (Unit 4 continued).','Directly follows from Step 4\u2019s time-response work and is high-frequency, low-effort marks.'],
+    ['Practice','Routh–Hurwitz criterion including special cases (Unit 5).','A clean, mechanical, always-tested topic that does not depend on anything beyond the characteristic equation.'],
+    ['Master','Root locus construction and sketching, then determining stability from it (Unit 5).','Builds directly on Routh–Hurwitz from Step 6 and is a guaranteed 6-mark Q5 question every year.'],
+    ['Study then master','Frequency domain specifications, then Bode plot construction with gain margin/phase margin (Unit 6).','Frequency response is conceptually the most different from everything before it, so tackling it last avoids confusion, and one exact Bode dataset is known to repeat.'],
+    ['Practice','Full past papers end to end (2–3 timed attempts), focusing on root locus plus Bode plot pairs since they always appear together in Q5.',''],
+  ],
+  prediction:{
+    note:null,
+    high:[
+      'TF derivation of an RLC electrical network (4–6 marks)',
+      'TF derivation of a mechanical translational system (4 marks)',
+      'Block diagram reduction numerical (4–6 marks)',
+      "Mason's gain formula numerical (4–6 marks)",
+      'Rise time/peak time derivation for 2nd order underdamped system (4–6 marks)',
+      'Routh–Hurwitz stability check (4–6 marks)',
+      'Root locus sketch with stability comment (6 marks)',
+      'Bode plot with gain margin/phase margin (6 marks)',
+      "MCQs on F-V/F-I analogy, Mason's formula, Bode decibel unit, position/velocity error coefficients",
+    ],
+    medium:[
+      'F-V and F-I analogy full derivation problem (6 marks)',
+      'Steady state error/error constants numerical (6 marks)',
+      'DC or AC servomotor TF derivation (4–6 marks)',
+      'P/PI/PD/PID controller explanation (4 marks)',
+    ],
+    low:[
+      'Polar plot as a standalone full question',
+      'Correlation between time domain and frequency domain as a full question (more commonly a short sub-part)',
+      "Difficulties in Routh's criterion (special cases) as a dedicated large question",
+    ],
+    closing:'These are pattern-based predictions, not guarantees. Prepare the full MUST DO list regardless of this forecast.',
+  },
+  top20:[
+    'TF derivation of RLC electrical network (Vo/Vi)',
+    'TF derivation of mechanical translational system',
+    'F-V analogy full derivation',
+    'F-I analogy full derivation',
+    'Block diagram reduction — all standard rules + numerical',
+    "Mason's gain formula — numerical on SFG",
+    'Block diagram to SFG conversion',
+    'Rise time and peak time derivation for 2nd order underdamped system',
+    'Second order numerical: find peak time, percent overshoot, settling time, rise time from G(s)',
+    'Steady state error derivation and error constants Kp, Kv, Ka',
+    'P, PI, PD, PID controllers — explanation with diagrams',
+    'Routh–Hurwitz criterion including special cases (row of zeros, first element zero)',
+    'Root locus construction rules (angle/magnitude condition, asymptotes, breakaway points)',
+    'Root locus sketch for a given OLTF + stability comment',
+    'Bode plot construction for a given OLTF',
+    'Gain margin and phase margin determination from Bode plot',
+    'DC servomotor transfer function derivation',
+    'AC servomotor transfer function derivation',
+    'Frequency domain specifications (bandwidth, resonant peak, cutoff frequency)',
+    'Effect of feedback on sensitivity, gain and stability',
+  ],
+  finalOrder:"Unit 1 basics, then TF of electrical/mechanical systems + analogies, then block diagram reduction + Mason's formula, then time-response (rise/peak time, error constants, controllers), then Routh–Hurwitz, then root locus, then frequency response (Bode plot last), then full timed practice papers.",
+  lastMin:[
+    'Re-read the MCQ checklist once, out loud if possible',
+    'Re-derive rise time and peak time formulas for 2nd order underdamped system from memory',
+    'Re-check the recurring Bode plot dataset G(s)H(s) = 80/[s(s+2)(s+20)] — make sure gain margin/phase margin steps are automatic',
+    "Re-practice one block diagram reduction and one Mason's gain formula problem start to finish",
+    'Formula sheet check: Kp/Kv/Ka definitions, angle condition for root locus, F-V and F-I analogy tables (do not mix them up)',
+    'Skim the prediction section once — do not panic if the exact transfer function numbers differ, the method is what is tested',
+  ],
+},
+{
+  id:'psa', shortName:'Power Systems', fullName:'Power System Analysis', code:'EEPCC-08',
+  accent:'#1F4E8C',
+  intro:'Based on 6 years of PYQs (2022–2026) against the official syllabus. Target: 65+/70.',
+  caveat:null,
+  syllabus:[
+    ['1','Per unit system, merits/demerits','MUST'],
+    ['1','Single Line Diagram from given ratings','MUST'],
+    ['1','Y-bus by inspection method','MUST'],
+    ['1','Y-bus by singular transformation','HIGH'],
+    ['1','Reactance/impedance diagram numerical','MUST'],
+    ['2','Short circuit kVA / selection of CB','MUST'],
+    ['2','Methods of short circuit current control','MUST'],
+    ['2','Transients on transmission line','MEDIUM'],
+    ['3','Resolving unbalanced phasors into symmetrical components (theory)','MUST'],
+    ['3','Symmetrical components numericals (given Ia, Ib, Ic)','MUST'],
+    ['3','Sequence impedances/networks of elements','HIGH'],
+    ['3','Power in terms of symmetrical components','MEDIUM'],
+    ['4','LG fault derivation + sequence network diagram','MUST'],
+    ['4','LLG fault derivation','HIGH'],
+    ['4','LL fault derivation','HIGH'],
+    ['4','Open conductor faults','MEDIUM'],
+    ['4','Fault current numericals with given X1, X2, X0','MUST'],
+    ['5','Types of buses (slack/PV/PQ)','MUST'],
+    ['5','Power flow equation (rectangular form) derivation','MUST'],
+    ['5','Gauss-Seidel method derivation/numerical','HIGH'],
+    ['5','Newton-Raphson method derivation','HIGH'],
+    ['5','Fast Decoupled method','LOW'],
+    ['6','Swing equation derivation','MUST'],
+    ['6','Equal Area Criterion (statement + assumptions + applications)','MUST'],
+    ['6','Types of stability','MEDIUM'],
+    ['6','Critical clearing angle/time','LOW'],
+  ],
+  repeated:[
+    ['(1 + a + a²) = 0','3 (MCQ)','6/6 papers','1','2022–2026','MUST'],
+    ['3-ph SC MVA formula (√3 × V × I)','2 (MCQ)','6/6','1','2022–2026','MUST'],
+    ['Equal Area Criterion → stability analysis','6 (MCQ)','6/6','1','2022–2026','MUST'],
+    ['SLD for G/T1/T2/TL/M1/M2 data (exact same numbers)','1','2/6 identical','4','2025, 2026','MUST'],
+    ['Reactance diagram problem (25MVA G, T1/T2, M1/M2)','1','4/6 near-identical','4','2022, 2023, 2023, 2025','MUST'],
+    ['Y-bus formation steps (inspection method)','1','6/6','4','2022–2026','MUST'],
+    ['Short circuit kVA of CB — derivation + selection','2','6/6','4','2022–2026','MUST'],
+    ['Short circuit current control methods (2 methods)','2','5/6','4','2022–2025','MUST'],
+    ['Types of buses in power system','5','6/6','4','2022–2026','MUST'],
+    ['Power flow equation rectangular form','5','6/6','4','2022–2026','MUST'],
+    ['Resolve unbalanced phasor into symmetrical components (theory)','3','6/6','4','2022–2026','MUST'],
+    ['Symmetrical components numerical (Ia, Ib, Ic given)','3','4/6','4','2022–2024','MUST'],
+    ['LG fault derivation + sequence network diagram','4','6/6','6','2022–2026','MUST'],
+    ['LLG fault derivation/numerical','4','4/6','6','2022, 2023, 2024','HIGH'],
+    ['Swing equation derivation','6','6/6','6','2022–2026','MUST'],
+    ['EAC statement + assumptions + applications','6','6/6','6','2022–2026','MUST'],
+    ['Gauss-Seidel/NR load flow derivation','5','5/6','6','2022–2025','HIGH'],
+    ['Y-bus matrix numerical (4-bus, R-X table)','1','2/6 near identical','6','2022, 2026','HIGH'],
+    ['Transformer p.u. reactance primary/secondary','2','2/6','6','2023, 2025','MEDIUM'],
+    ['Transformer SC MVA numerical (11kV/0.4kV, 500kVA, 5%)','2 (MCQ)','2/6 identical','1','2025, 2026','HIGH'],
+  ],
+  roi:[
+    'LG/LLG/LL fault derivations with sequence networks — 6 marks, appears every year, Q.5a slot',
+    'Swing equation + EAC — 6 marks, every year, Q.5b/c slot',
+    'Y-bus by inspection method (theory) + 4-bus numerical — 4–6 marks, every year',
+    'Short circuit kVA/CB selection derivation — 4 marks, every year',
+    'SLD + reactance diagram numericals (2 fixed datasets repeat) — 4 marks, every year',
+    'Power flow equation rectangular form derivation — 4 marks, every year',
+    'Types of buses — 4 marks, every year, easy guaranteed marks',
+    'Symmetrical components resolution theory + numerical — 4 marks, every year',
+    'Per unit system merits/demerits — 4 marks, every year, easy',
+    'Gauss-Seidel/NR numerical — 6 marks, 5/6 years',
+  ],
+  mcq:[
+    '(1 + a + a²) = 0, where a is the 120° operator and a² is the 240° operator',
+    '3-ph SC MVA = √3 × pre-fault line voltage (kV) × SC current (kA)',
+    'Impedance diagram used for fault analysis (not load flow)',
+    'Equal Area Criterion used for transient stability analysis',
+    'Theoretical max power transfer at δ = 90°',
+    'Y-bus size for n-bus system = n × n',
+    'Off-diagonal elements of Y-bus = mutual admittance (negative of line admittance)',
+    'Diagonal elements of Y-bus = self admittance (sum of all admittances at that bus)',
+    'Zero sequence impedance in LL fault = infinity (zero seq network not connected)',
+    'Most common buses: slack bus and generator (PV) bus',
+    'Swing bus/slack bus specifies magnitude and angle of V (reference, P and Q unknown)',
+    'Generator (PV) bus specifies P and magnitude of V',
+    'Load (PQ) bus specifies P and Q',
+    'DC offset = unidirectional transient component of short circuit current',
+    'Gauss-Seidel advantage: calculation time per iteration is less, simple to program',
+    'NR method: best and most accurate for large systems',
+    'PU impedance changes with new base: Z_new = Z_old × (MVA_new/MVA_old) × (kV_old/kV_new)²',
+    'Sub-transient reactance < transient reactance < synchronous reactance',
+    'Relation: percentage value = 100 × per unit value',
+    'Reactors used to limit and control short circuit current',
+    'Transformer SC MVA to CB on infinite bus = Rated MVA ÷ percent Z (example: 0.5/0.05 = 10 MVA)',
+    'H (inertia constant): KE stored = H × MVA rating',
+  ],
+  strategy:{
+    min:"Master items 1–10 in the High-ROI list plus the full MCQ checklist (14 marks) plus Units 1, 3, 4 and 6 long answers — a safe 50–55/70.",
+    push:"Add Unit 5 load flow (Gauss-Seidel AND Newton-Raphson derivations, not just one), both the Y-bus numerical (4-bus) AND singular transformation method, LLG and open-conductor fault derivations (not just LG), and the second reactance-diagram dataset so either numerical that appears is familiar.",
+    skip:"Per unit system explanation (near-guaranteed 4 marks, a 2-minute topic) and types of buses (guaranteed 4 marks, pure theory, zero calculation risk).",
+  },
+  units:[
+    ['1','Representation of Power System Components','8–10','Every paper, Q2 and Q3','MUST'],
+    ['2','Symmetrical Faults Analysis','8–10','Every paper','MUST'],
+    ['3','Symmetrical Components','8–10','Every paper','MUST'],
+    ['4','Unsymmetrical Faults','10–12','Every paper, Q5','MUST'],
+    ['5','Load Flow Studies','8–10','Every paper','HIGH'],
+    ['6','Stability Studies','10–12','Every paper, Q5','MUST'],
+  ],
+  steps:[
+    ['Study','Per unit system plus SLD plus reactance and impedance diagrams (Unit 1 basics).','Every later numerical (faults, load flow) assumes you can convert a system to per-unit and draw its diagram. This is the foundation.'],
+    ['Master','Y-bus formation (inspection method first, then singular transformation).','It is mechanical, high-frequency, and needed again conceptually for Unit 5.'],
+    ['Practice','Short circuit kVA and CB selection plus short circuit current control methods (Unit 2).','Builds directly on per-unit skills from Step 1, numerically simple, guaranteed 4 marks.'],
+    ['Study','Symmetrical components theory, resolution of unbalanced phasors (Unit 3).','This is the single biggest prerequisite for Unit 4 (unsymmetrical faults); do not attempt faults before this is solid.'],
+    ['Master','Symmetrical components numericals (given Ia, Ib, Ic find sequence components, and the reverse).','This exact numerical pattern repeats almost every year and is a direct stepping stone to fault calculations.'],
+    ['Practice','LG, LL, LLG fault derivations with sequence network diagrams (Unit 4).','This is the single highest-value unit (10–12 marks) and depends entirely on Steps 4 and 5 being solid.'],
+    ['Study','Types of buses plus power flow equation in rectangular form (Unit 5 basics).','Conceptually independent of faults, a fresh guaranteed-marks topic before stability.'],
+    ['Master','Gauss-Seidel method, then Newton-Raphson if time allows (Unit 5).','A natural continuation of the bus and power-flow concepts just studied.'],
+    ['Study then master','Swing equation derivation, then Equal Area Criterion (Unit 6).','EAC uses power-angle concepts, so doing it last keeps Unit 5\u2019s power equations fresh, which helps EAC make sense.'],
+    ['Practice','Full past papers end to end (2–3 timed attempts), focusing on the Y-bus 4-bus numerical and the two repeating reactance-diagram datasets.',''],
+  ],
+  prediction:{
+    note:null,
+    high:[
+      'LG fault derivation with sequence network diagram (6 marks)',
+      'Swing equation derivation (6 marks)',
+      'EAC statement, assumptions and applications (6 marks)',
+      'Types of buses (4 marks)',
+      'Per unit system merits and demerits (4 marks)',
+      'Short circuit kVA and CB selection (4 marks)',
+      'Power flow equation in rectangular form (4 marks)',
+      'MCQs on (1+a+a²), the SC MVA formula, Y-bus size and mutual admittance, EAC usage, and bus specifications',
+    ],
+    medium:[
+      'LLG fault numerical with given X1, X2, X0 (6 marks)',
+      'Gauss-Seidel numerical with given bus data (6 marks)',
+      'Y-bus 4-bus numerical with an R-X table (6 marks)',
+      'Reactance diagram problem reusing one of the two recurring datasets (4 marks)',
+      'Symmetrical components numerical given Ia, Ib, Ic (4 marks)',
+    ],
+    low:[
+      'Fast Decoupled load flow method as a standalone question',
+      'Open-conductor faults as a full 6-mark question (more commonly a 4-mark sub-part)',
+      'Critical clearing time or angle as a standalone question',
+    ],
+    closing:'These are pattern-based predictions, not guarantees. Prepare the full MUST DO list regardless of this forecast.',
+  },
+  top20:[
+    'LG fault derivation with sequence network diagram',
+    'LLG fault derivation and numerical',
+    'LL fault derivation',
+    'Swing equation derivation',
+    'Equal Area Criterion — statement, assumptions, applications',
+    'Y-bus formation by inspection method (theory + steps)',
+    'Y-bus 4-bus numerical given R-X table',
+    'Short circuit kVA formula derivation and CB selection',
+    'Short circuit current control methods (2, with diagrams)',
+    'Per unit system — merits and demerits',
+    'SLD construction from given generator/transformer/line/motor data',
+    'Reactance diagram numerical (both recurring datasets)',
+    'Types of buses (slack, PV, PQ) with significance',
+    'Power flow equation in rectangular form — derivation',
+    'Gauss-Seidel method — algorithm and one numerical',
+    'Newton-Raphson method — algorithm',
+    'Symmetrical components — resolving unbalanced phasors (theory)',
+    'Symmetrical components numerical (Ia, Ib, Ic given)',
+    'Sequence networks and sequence impedances of alternator/transformer/line',
+    'Open conductor faults (theory with sequence network)',
+  ],
+  finalOrder:"Per-unit and diagrams, then Y-bus, then short circuit kVA, then symmetrical components theory, then symmetrical components numericals, then the three fault derivations, then buses and power flow equation, then Gauss-Seidel and NR, then swing equation and EAC, then full timed practice papers.",
+  lastMin:[
+    'Re-read the MCQ checklist once, out loud if possible',
+    'Re-derive swing equation and EAC applications from memory (10 minutes)',
+    'Re-derive LG fault sequence network diagram from memory (10 minutes)',
+    'Re-check the two recurring reactance-diagram datasets — make sure both are instantly recognizable',
+    'Re-check Y-bus inspection method steps and the 4-bus R-X table numerical',
+    'Formula sheet check: PU impedance base conversion, SC MVA formula, H and KE relation, error constants Kp/Kv/Ka are NOT in this subject (do not confuse with Linear Control System)',
+    'Skim the prediction section once — do not panic if the exact numbers differ, the method is what is tested',
+  ],
+},
+];
+
+/* ============================= STORAGE ============================= */
+function storeKey(subId){ return 'roadmap:'+subId+':checked'; }
+function loadChecked(subId){
+  try{
+    const raw = localStorage.getItem(storeKey(subId));
+    return raw ? JSON.parse(raw) : {};
+  }catch(e){ return {}; }
+}
+function saveChecked(subId, obj){
+  try{ localStorage.setItem(storeKey(subId), JSON.stringify(obj)); }catch(e){}
+}
+
+/* ============================= RENDER ============================= */
+const tabsEl = document.getElementById('tabs');
+const panelsEl = document.getElementById('panels');
+const tpl = document.getElementById('tpl-panel');
+
+function priBadge(code){
+  const map = {MUST:'MUST DO', HIGH:'HIGH', MEDIUM:'MEDIUM', LOW:'LOW'};
+  return '<span class="pri '+code+'">'+map[code]+'</span>';
+}
+
+function buildTable(rows, headers, kind){
+  let th = '<thead><tr>' + headers.map(h=>'<th>'+h+'</th>').join('') + '</tr></thead>';
+  let body = '<tbody>';
+  rows.forEach(r=>{
+    if(kind==='syllabus'){
+      const [unit, topic, pri] = r;
+      body += '<tr><td class="unit">Unit '+unit+'</td><td class="concept">'+topic+'</td><td>'+priBadge(pri)+'</td></tr>';
+    } else if(kind==='repeated'){
+      const [concept, unit, freq, marks, years, pri] = r;
+      body += '<tr><td class="concept">'+concept+'</td><td class="unit">'+unit+'</td><td class="num">'+freq+'</td><td class="num">'+marks+'</td><td class="num">'+years+'</td><td>'+priBadge(pri)+'</td></tr>';
+    } else if(kind==='units'){
+      const [unit, topic, marks, freq, pri] = r;
+      body += '<tr><td class="unit">Unit '+unit+'</td><td class="concept">'+topic+'</td><td class="num">'+marks+'</td><td>'+freq+'</td><td>'+priBadge(pri)+'</td></tr>';
+    }
+  });
+  body += '</tbody>';
+  return th + body;
+}
+
+function buildPanel(sub){
+  const node = tpl.content.cloneNode(true);
+  const root = node.querySelector('.layout');
+  root.style.setProperty('--accent', sub.accent);
+
+  node.querySelector('[data-f="fullName"]').textContent = sub.fullName;
+  node.querySelector('[data-f="code"]').textContent = sub.code;
+  node.querySelector('[data-f="intro"]').textContent = sub.intro;
+
+  if(sub.caveat){
+    const box = node.querySelector('[data-f="caveatBox"]');
+    box.style.display = 'block';
+    node.querySelector('[data-f="caveat"]').textContent = sub.caveat;
+  }
+
+  node.querySelector('[data-f="syllabusTable"]').innerHTML = buildTable(
+    sub.syllabus, ['Unit','Topic','Priority'], 'syllabus'
+  );
+  node.querySelector('[data-f="repeatedTable"]').innerHTML = buildTable(
+    sub.repeated, ['Concept / question','Unit','Frequency','Marks','Years seen','Priority'], 'repeated'
+  );
+  node.querySelector('[data-f="unitsTable"]').innerHTML = buildTable(
+    sub.units, ['Unit','Topic','Typical marks','Frequency','Priority'], 'units'
+  );
+
+  const roiList = node.querySelector('[data-f="roiList"]');
+  sub.roi.forEach((txt,i)=>{
+    const li = document.createElement('li');
+    li.innerHTML = '<span class="rank">'+(i+1)+'</span><span class="txt">'+txt+'</span>';
+    roiList.appendChild(li);
+  });
+
+  // checked-state store (shared across mcq + top20 + lastmin of this subject)
+  const checked = loadChecked(sub.id);
+  let totalCheckable = sub.mcq.length + sub.top20.length;
+  function pct(){
+    let c=0;
+    sub.mcq.forEach((_,i)=>{ if(checked['mcq'+i]) c++; });
+    sub.top20.forEach((_,i)=>{ if(checked['t20'+i]) c++; });
+    return Math.round(100*c/totalCheckable);
+  }
+  function updatePct(){
+    root.querySelector('[data-f="pct"]').textContent = pct();
+  }
+
+  const mcqGrid = node.querySelector('[data-f="mcqGrid"]');
+  sub.mcq.forEach((txt,i)=>{
+    const id = 'mcq'+i;
+    const label = document.createElement('label');
+    label.className = 'chk' + (checked[id] ? ' done' : '');
+    label.innerHTML = '<input type="checkbox" '+(checked[id]?'checked':'')+'><span>'+txt+'</span>';
+    label.querySelector('input').addEventListener('change', (e)=>{
+      checked[id] = e.target.checked;
+      label.classList.toggle('done', e.target.checked);
+      saveChecked(sub.id, checked);
+      updatePct();
+    });
+    mcqGrid.appendChild(label);
+  });
+
+  node.querySelector('[data-f="stratMin"]').textContent = sub.strategy.min;
+  node.querySelector('[data-f="stratPush"]').textContent = sub.strategy.push;
+  node.querySelector('[data-f="stratSkip"]').textContent = sub.strategy.skip;
+
+  const stepsList = node.querySelector('[data-f="stepsList"]');
+  sub.steps.forEach((s,i)=>{
+    const [verb, body, why] = s;
+    const div = document.createElement('div');
+    div.className = 'step';
+    div.innerHTML = '<div class="n">'+(i+1)+'</div><div><h4>'+verb+'</h4><p>'+body+(why ? ' <span style="color:var(--ink-faint)">— '+why+'</span>' : '')+'</p></div>';
+    stepsList.appendChild(div);
+  });
+
+  if(sub.prediction.note){
+    const n = node.querySelector('[data-f="predNoteTop"]');
+    n.style.display='block';
+    n.textContent = 'Confidence note: ' + sub.prediction.note;
+  }
+  ['high','medium','low'].forEach(tier=>{
+    const ul = node.querySelector('[data-f="pred'+tier.charAt(0).toUpperCase()+tier.slice(1)+'"]');
+    sub.prediction[tier].forEach(txt=>{
+      const li = document.createElement('li');
+      li.textContent = txt;
+      ul.appendChild(li);
+    });
+  });
+  node.querySelector('[data-f="predClosing"]').textContent = sub.prediction.closing;
+
+  const top20List = node.querySelector('[data-f="top20List"]');
+  sub.top20.forEach((txt,i)=>{
+    const id = 't20'+i;
+    const row = document.createElement('div');
+    row.className = 't20-row' + (checked[id] ? ' done' : '');
+    row.innerHTML = '<span class="rn mono">'+String(i+1).padStart(2,'0')+'</span><label><input type="checkbox" '+(checked[id]?'checked':'')+'><span>'+txt+'</span></label>';
+    row.querySelector('input').addEventListener('change',(e)=>{
+      checked[id] = e.target.checked;
+      row.classList.toggle('done', e.target.checked);
+      saveChecked(sub.id, checked);
+      updatePct();
+    });
+    top20List.appendChild(row);
+  });
+
+  node.querySelector('[data-f="finalOrder"]').textContent = sub.finalOrder;
+  const lastMinList = node.querySelector('[data-f="lastMinList"]');
+  sub.lastMin.forEach(txt=>{
+    const li = document.createElement('li');
+    li.textContent = txt;
+    lastMinList.appendChild(li);
+  });
+
+  updatePct();
+
+  node.querySelector('[data-f="resetBtn"]').addEventListener('click', ()=>{
+    if(!confirm('Clear your checked-off progress for '+sub.shortName+'? This cannot be undone.')) return;
+    Object.keys(checked).forEach(k=> delete checked[k]);
+    saveChecked(sub.id, checked);
+    root.querySelectorAll('.chk').forEach(el=>{ el.classList.remove('done'); el.querySelector('input').checked=false; });
+    root.querySelectorAll('.t20-row').forEach(el=>{ el.classList.remove('done'); el.querySelector('input').checked=false; });
+    updatePct();
+  });
+
+  return node;
+}
+
+function buildTab(sub){
+  const btn = document.createElement('button');
+  btn.className = 'tab';
+  btn.dataset.sub = sub.id;
+  btn.innerHTML = '<span class="dot"></span>'+sub.shortName;
+  btn.style.setProperty('--accent', sub.accent);
+  btn.addEventListener('click', ()=> activate(sub.id));
+  return btn;
+}
+
+function activate(id){
+  document.querySelectorAll('.tab').forEach(t=> t.classList.toggle('active', t.dataset.sub===id));
+  document.querySelectorAll('.panel').forEach(p=> p.classList.toggle('active', p.dataset.sub===id));
+  try{ localStorage.setItem('roadmap:lastTab', id); }catch(e){}
+  window.scrollTo({top:0, behavior:'instant' in window ? 'instant' : 'auto'});
+}
+
+SUBJECTS.forEach(sub=>{
+  tabsEl.appendChild(buildTab(sub));
+  const panelWrap = document.createElement('div');
+  panelWrap.className = 'panel';
+  panelWrap.dataset.sub = sub.id;
+  panelWrap.appendChild(buildPanel(sub));
+  panelsEl.appendChild(panelWrap);
+});
+
+// side-nav current section highlighting via IntersectionObserver, scoped per active panel
+function wireSideNav(panel){
+  const links = panel.querySelectorAll('.sidenav a');
+  const secs = panel.querySelectorAll('section.block');
+  links.forEach(a=>{
+    a.addEventListener('click',(e)=>{
+      e.preventDefault();
+      const target = panel.querySelector('#sec-'+a.dataset.sec);
+      if(target) target.scrollIntoView({behavior:'smooth', block:'start'});
+    });
+  });
+  const io = new IntersectionObserver((entries)=>{
+    entries.forEach(entry=>{
+      if(entry.isIntersecting){
+        const id = entry.target.id.replace('sec-','');
+        links.forEach(a=> a.classList.toggle('current', a.dataset.sec===id));
+      }
+    });
+  }, {rootMargin:'-90px 0px -70% 0px', threshold:0});
+  secs.forEach(s=> io.observe(s));
+}
+document.querySelectorAll('.panel').forEach(p=> wireSideNav(p));
+
+let startId = SUBJECTS[0].id;
+try{
+  const last = localStorage.getItem('roadmap:lastTab');
+  if(last && SUBJECTS.some(s=>s.id===last)) startId = last;
+}catch(e){}
+activate(startId);
+
+/* ============================= THEME TOGGLE ============================= */
+const ICONS = {
+  light:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="4.2"/><path d="M12 2.5v2.4M12 19.1v2.4M4.2 4.2l1.7 1.7M18.1 18.1l1.7 1.7M2.5 12h2.4M19.1 12h2.4M4.2 19.8l1.7-1.7M18.1 5.9l1.7-1.7"/></svg>',
+  dark:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.5 14.4A8.4 8.4 0 1 1 9.6 3.5a6.6 6.6 0 0 0 10.9 10.9z"/></svg>',
+  system:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4.5" width="18" height="12" rx="1.6"/><path d="M8.5 20h7M12 16.5V20"/></svg>',
+};
+const LABELS = {light:'Light', dark:'Dark', system:'Auto'};
+const themeBtn = document.getElementById('themeToggle');
+const THEME_ORDER = ['system','light','dark'];
+
+function getStoredTheme(){
+  try{ return localStorage.getItem('roadmap:theme') || 'system'; }catch(e){ return 'system'; }
+}
+function applyTheme(mode){
+  if(mode==='system'){ document.documentElement.removeAttribute('data-theme'); }
+  else{ document.documentElement.setAttribute('data-theme', mode); }
+  themeBtn.innerHTML = ICONS[mode] + '<span>'+LABELS[mode]+'</span>';
+  themeBtn.setAttribute('aria-label', 'Theme: '+LABELS[mode]+'. Click to change.');
+}
+function setTheme(mode){
+  try{ localStorage.setItem('roadmap:theme', mode); }catch(e){}
+  applyTheme(mode);
+}
+themeBtn.addEventListener('click', ()=>{
+  const current = getStoredTheme();
+  const next = THEME_ORDER[(THEME_ORDER.indexOf(current)+1) % THEME_ORDER.length];
+  setTheme(next);
+});
+applyTheme(getStoredTheme());
+</script>
+</body>
+</html>
